@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style type="text/css">
+    .smallmap {
+        width: 800px;
+        height: 600px;
+        border: 1px solid #ccc;
+    }
+</style>
+
+<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script src="/media/js/openprice.js"></script>
+{% endblock %}
+
+{% block body_script %}
+onload="init()"
+{% endblock %}
+
+{% block title %}Торговая точка{% endblock %}
+
+{% block content %}
+
+<p>
+    <b>{{ shop.title }}</b>
+    ({{ shop.type.title }}, {{ shop.addr.city }} - {{ shop.addr.street }}, {{ shop.addr.house }})
+<p>Координаты: {{ shop.addr.x }} / {{ shop.addr.y }}
+
+<div id="map" class="smallmap"></div>
+  
+<input name=btn1 type=submit value="Метка" onclick="add()">
+<input name=btn2 type=submit value="Метка2" onclick="add2()">
+
+{% endblock %}

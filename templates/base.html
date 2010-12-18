@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>OpenPrice</title>
+
+<style>
+    body {
+        font-family:sans-serif;
+        background:#eeeeee;
+        color:#555;
+        text-align:center;
+    }
+
+    h1, h2 {
+        border-bottom:1px #555 solid;
+        color:#c50000;
+    }
+
+    a {
+        color:#a52919
+    }
+</style>
+
+{% block head %}{% endblock %}
+
+</head>
+<body align=center {% block body_script %}{% endblock %}>
+
+<table width=70% align=center><tr><td>
+
+
+<center><h1>open price</h1></center>
+
+
+<div align=center>
+    <a href="/">home</a> |
+    {% if user.is_authenticated %}
+    {{ user.username }} <a href="{% url auth_logout %}">выйти</a> |
+    <a href="/trade/add/">add</a>
+    {% else %}
+    <a href="{% url auth_login %}">login</a>
+    {% endif %}
+</div>
+
+<h2>{% block title %}{% endblock %}</h2>
+
+
+<div align=left>
+    {% block content %}
+
+    {% endblock %}
+</div>
+
+
+</td></tr></table>
+
+<div align=center>author: bydlocode foundation</div>
+
+</body></html>
