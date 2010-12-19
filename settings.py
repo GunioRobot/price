@@ -1,8 +1,5 @@
 # Django settings for app project.
 
-import socket
-import password
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -10,11 +7,11 @@ ADMINS = (
     ('Your Name', 'your_email@domain.com'),
 )
 
-DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'samodelk_openp42'             # Or path to database file if using sqlite3.
-DATABASE_USER = password.DATABASE_USER             # Not used with sqlite3.
-DATABASE_PASSWORD = password.DATABASE_PASSWORD         # Not used with sqlite3.
-DATABASE_HOST = 'mysql0.locum.ru'             # Set to empty string for localhost. Not used with sqlite3.
+DATABASE_ENGINE = ''           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+DATABASE_NAME = ''             # Or path to database file if using sqlite3.
+DATABASE_USER = ''             # Not used with sqlite3.
+DATABASE_PASSWORD = ''         # Not used with sqlite3.
+DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
 LOGIN_REDIRECT_URL = "/"
@@ -102,9 +99,11 @@ INSTALLED_APPS = (
     'fprice',
 )
 
+# DATABASE SETTINGS
+import socket
 if socket.gethostname() == 'hydrogen':
-    pass
     #DEBUG = False
+    from password import *
 else:
     #DEBUG = True
-    import local_settings
+    from local_settings import *

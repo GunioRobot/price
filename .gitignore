@@ -2,3 +2,4 @@
 *.pyo
 password.py
 south
+test.db
