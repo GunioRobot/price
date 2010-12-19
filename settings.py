@@ -1,5 +1,6 @@
 # Django settings for app project.
 
+import socket
 import password
 
 DEBUG = True
@@ -100,3 +101,10 @@ INSTALLED_APPS = (
     'south',
     'fprice',
 )
+
+if socket.gethostname() == 'hydrogen':
+    pass
+    #DEBUG = False
+else:
+    #DEBUG = True
+    import local_settings
