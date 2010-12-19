@@ -57,7 +57,7 @@ class Shop(models.Model):
     addr = models.ForeignKey(Address, null=True, blank=True)
     
     def __unicode__(self):
-        return "%s" % ( self.title + " (" + self.addr.__unicode__() +")")
+        return "%s" % ( self.addr.city.title + " - " + self.title + " (" + self.addr.__unicode__() +")")
 
 class GSection(models.Model):
     title = models.CharField(max_length=50)
@@ -92,7 +92,7 @@ class Goods(models.Model):
     ed = models.CharField(max_length=5,choices=ED_CHOICES)
     
     def __unicode__(self):
-        return self.title
+        return "%s" % ( self.gclass.title + " - " + self.title )
 
 class Trade(models.Model):
     CURR_CHOICES = (
@@ -109,7 +109,7 @@ class Trade(models.Model):
     currency = models.CharField(max_length=3,choices=CURR_CHOICES)
     
     def __unicode__(self):
-        return "%s" % ( self.goods.title + " " + unicode(self.amount) )
+        return "%s" % ( self.goods.__unicode__() + " " + unicode(self.amount) )
 
 class TradeForm(ModelForm):
     class Meta:
