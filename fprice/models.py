@@ -4,7 +4,7 @@
 from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
-from django.forms import ModelForm
+from django import forms
 
 class Country(models.Model):
     title = models.CharField(max_length=50)
@@ -111,7 +111,5 @@ class Trade(models.Model):
     def __unicode__(self):
         return "%s" % ( self.goods.__unicode__() + " " + unicode(self.amount) )
 
-class TradeForm(ModelForm):
-    class Meta:
-        model = Trade
-
+class TradeForm(forms.Form):
+    gclass = forms.CharField(max_length=50)
