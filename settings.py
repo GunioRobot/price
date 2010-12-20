@@ -104,6 +104,7 @@ import socket
 if socket.gethostname() == 'hydrogen':
     #DEBUG = False
     from password import *
+    LOCALSERVER = False
 else:
     #DEBUG = True
     from local_settings import *
