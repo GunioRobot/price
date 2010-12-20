@@ -1,6 +1,9 @@
-.directory
 *.pyc
 *.pyo
+
+.directory
 password.py
-south
 test.db
+
+django
+south

@@ -29,3 +29,10 @@ urlpatterns = patterns('fprice.views',
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
 )
+
+# routing static files
+from django.conf import settings
+if settings.LOCALSERVER:
+    urlpatterns+= patterns('',
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True})
+    )

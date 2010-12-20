@@ -1,3 +1,5 @@
+LOCALSERVER = True
+
 # Django local settings for app project.
 
 DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
