@@ -72,18 +72,20 @@ class GClass(models.Model):
     def __unicode__(self):
         return self.title
 
+
+ED_CHOICES = (
+    ('sh', 'шт/уп'),
+    ('kg', 'кг'),
+    ('gr', 'грамм'),        
+    ('m', 'метр'),
+    ('l', 'литр'),
+)
+
 class Goods(models.Model):
     GOODS_CHOICES = (
         ('prd','продукты'),
         ('ode','одежда'),
         ('med','медицина'),
-    )
-    ED_CHOICES = (
-        ('sh', 'шт/уп'),
-        ('kg', 'кг'),
-        ('gr', 'грамм'),        
-        ('m', 'метр'),
-        ('l', 'литр'),
     )
     gclass = models.ForeignKey(GClass, null=True, blank=True)
     title = models.CharField(max_length=100)
@@ -112,4 +114,9 @@ class Trade(models.Model):
         return "%s" % ( self.goods.__unicode__() + " " + unicode(self.amount) )
 
 class TradeForm(forms.Form):
-    gclass = forms.CharField(max_length=50)
+    shop = forms.CharField(max_length=50, required=False)
+    shop_pk = forms.IntegerField(widget=forms.HiddenInput())
+    goodstitle = forms.CharField(max_length=50, required=False)
+    ed = forms.ChoiceField(choices=ED_CHOICES)
+    amount = forms.FloatField(required=False)
+    cost = forms.DecimalField(max_digits=12,decimal_places=2,required=False)

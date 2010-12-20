@@ -1,9 +1,42 @@
 {% extends "base.html" %}
 
-{% block title %}Новая цена{% endblock %}
+{% block title %}новая цена/покупка{% endblock %}
 
 {% block content %}
 
-{{ form }}
+<script>
+    $(function() {
+        $('#id_shop').autocomplete('{% url title_lookup %}', {
+            dataType: 'json',
+            width: 500,
+            parse: function(data) {
+                return $.map(data, function(row) {
+                    return { data:row, value:row[1], result:row[0] };
+                });
+            }
+            }).result(
+                function(e, data, value) {
+                    $("#id_shop_pk").val(value);
+                }
+            );
+        }
+    );
+</script>
+
+<form action="/trade/add/" method="post">{% csrf_token %}
+<table>
+{{ form.as_table }}
+</table>
+<input type="submit" value="Добавить" />
+</form>
+
+{% if results %}
+{% for i in results %}
+<p><a href="/goods/{{ i.id }}">{{ i }}</a>
+{% endfor %}
+{% endif %}
+<p>Price: {{ price }}
+<p>{{ form.cleaned_data.goods }}
+
 
 {% endblock %}

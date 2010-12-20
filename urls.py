@@ -23,6 +23,8 @@ urlpatterns = patterns('fprice.views',
     (r'^goods/(?P<goods_id>\d+)', 'trade_goods_list'),
     (r'^accounts/', include('registration.urls')),    
 
+    url(r'^title_lookup/', 'shop_title_lookup', name='title_lookup'),
+
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

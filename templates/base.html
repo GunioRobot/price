@@ -1,6 +1,16 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
 <html>
 <head>
 <title>OpenPrice</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<script type="text/javascript" src="/media/js/jquery.min.js"></script>
+<script type="text/javascript" src="/media/js/jquery.bgiframe.min.js"></script>
+<script type="text/javascript" src="/media/js/jquery.autocomplete.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/media/js/jquery.autocomplete.css" />
+
 
 <style>
     body {
@@ -28,16 +38,16 @@
 <table width=70% align=center><tr><td>
 
 
-<center><h1><img src="/media/earth.gif">open price</h1></center>
+<center><h1><img src="/media/earth.gif">openprice</h1></center>
 
 
 <div align=center>
-    <a href="/">home</a> |
+    <a href="/">главная</a> |
     {% if user.is_authenticated %}
-    {{ user.username }} <a href="{% url auth_logout %}">выйти</a> |
-    <a href="/trade/add/">add</a>
+    <a href="/trade/add/">добавить</a> |
+    <a href="{% url auth_logout %}">выйти</a> ({{ user.username }})
     {% else %}
-    <a href="{% url auth_login %}">login</a>
+    <a href="{% url auth_login %}">войти</a>
     {% endif %}
 </div>
 
