@@ -114,9 +114,12 @@ class Trade(models.Model):
         return "%s" % ( self.goods.__unicode__() + " " + unicode(self.amount) )
 
 class TradeForm(forms.Form):
-    shop = forms.CharField(max_length=50, required=False)
+    shop = forms.CharField(max_length=50, required=True)
     shop_pk = forms.IntegerField(widget=forms.HiddenInput())
-    goodstitle = forms.CharField(max_length=50, required=False)
+    gtype = forms.CharField(max_length=50, required=True)
+    gtype_pk = forms.IntegerField(widget=forms.HiddenInput())
+    goodstitle = forms.CharField(max_length=50, required=True)
     ed = forms.ChoiceField(choices=ED_CHOICES)
-    amount = forms.FloatField(required=False)
-    cost = forms.DecimalField(max_digits=12,decimal_places=2,required=False)
+    amount = forms.FloatField(required=True)
+    cost = forms.DecimalField(max_digits=12,decimal_places=2,required=True)
+    price = forms.DecimalField(max_digits=12,decimal_places=2,required=False)

@@ -7,7 +7,7 @@
 
 {% for trade in trade_list %}
 <p><i>{{ trade.user }} - {{ trade.time }}
-</i> - <b><a href="/goods/{{ trade.goods.gclass.id }}">{{ trade.goods.gclass.title }}</a> {{ trade.goods.title }} - {{ trade.price }} {{ trade.currency }}/{{ trade.goods.ed }} - {{ trade.amount }}</b> ({{ trade.shop.addr.city }}, <a href="/shop/{{ trade.shop.id }}" title="{{ trade.shop.addr.city }}, {{ trade.shop.addr.street }}">{{ trade.shop.title }}</a>)</p>
+</i> - <b><a href="/goods/{{ trade.goods.gclass.id }}">{{ trade.goods.gclass.title }}</a> {{ trade.goods.title }} - {{ trade.price }} {{ trade.currency }}/{{ trade.goods.ed }} - <a href="/trade/{{ trade.id }}">{{ trade.amount }}</a></b> ({{ trade.shop.addr.city }}, <a href="/shop/{{ trade.shop.id }}" title="{{ trade.shop.addr.city }}, {{ trade.shop.addr.street }}">{{ trade.shop.title }}</a>)</p>
 
 {% endfor %}
 

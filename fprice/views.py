@@ -33,6 +33,13 @@ def trade_add(request):
 
     return render_to_response('trade_add.html', {'price': price, 'results': results, 'form': form}, context_instance=RequestContext(request))
 
+def trade_view(request, trade_id):
+    trade = Trade.objects.get(pk=trade_id)
+    data = {'goodstitle': trade.goods.title,'ed': trade.goods.ed, 'amount': trade.amount, 'price': trade.price, 'gtype': trade.goods.gclass, 'shop': trade.shop, 'cost': unicode(float(trade.amount) * float(trade.price))}
+    form = TradeForm(initial=data)
+
+    return render_to_response('trade_add.html', {'form': form}, context_instance=RequestContext(request))
+
 def shop_info(request, shop_id):
     shop = Shop.objects.get(pk=shop_id)
     return render_to_response('shop_info.html', {'shop': shop}, context_instance=RequestContext(request))
