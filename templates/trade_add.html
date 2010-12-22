@@ -6,7 +6,7 @@
 
 <script>
     $(function() {
-        $('#id_shop').autocomplete('{% url title_lookup %}', {
+        $('#id_shop').autocomplete('{% url shop_lookup %}', {
             dataType: 'json',
             width: 500,
             parse: function(data) {
@@ -23,6 +23,26 @@
     );
 </script>
 
+<script>
+    $(function() {
+        $('#id_gclass').autocomplete('{% url gclass_lookup %}', {
+            dataType: 'json',
+            width: 500,
+            parse: function(data) {
+                return $.map(data, function(row) {
+                    return { data:row, value:row[1], result:row[0] };
+                });
+            }
+            }).result(
+                function(e, data, value) {
+                    $("#id_gclass_pk").val(value);
+                }
+            );
+        }
+    );
+</script>
+
+
 <form action="/trade/add/" method="post">{% csrf_token %}
 <table>
 {{ form.as_table }}
@@ -35,6 +55,5 @@
 <p><a href="/goods/{{ i.id }}">{{ i }}</a>
 {% endfor %}
 {% endif %}
-
 
 {% endblock %}

@@ -96,12 +96,13 @@ class Goods(models.Model):
     def __unicode__(self):
         return "%s" % ( self.gclass.title + " - " + self.title )
 
+CURR_CHOICES = (
+    ('rur','рубли'),
+    ('usd','доллары'),
+    ('eur','евро'),
+)
+
 class Trade(models.Model):
-    CURR_CHOICES = (
-        ('rur','рубли'),
-        ('usd','доллары'),
-        ('eur','евро'),
-    )
     user = models.ForeignKey(User)
     shop = models.ForeignKey(Shop)
     goods = models.ForeignKey(Goods)
@@ -114,12 +115,14 @@ class Trade(models.Model):
         return "%s" % ( self.goods.__unicode__() + " " + unicode(self.amount) )
 
 class TradeForm(forms.Form):
-    shop = forms.CharField(max_length=50, required=True)
+    shop = forms.CharField(max_length=50, required=True, label="Торговая точка")
     shop_pk = forms.IntegerField(widget=forms.HiddenInput())
-    gtype = forms.CharField(max_length=50, required=True)
-    gtype_pk = forms.IntegerField(widget=forms.HiddenInput())
-    goodstitle = forms.CharField(max_length=50, required=True)
-    ed = forms.ChoiceField(choices=ED_CHOICES)
-    amount = forms.FloatField(required=True)
-    cost = forms.DecimalField(max_digits=12,decimal_places=2,required=True)
-    price = forms.DecimalField(max_digits=12,decimal_places=2,required=False)
+    gclass = forms.CharField(max_length=50, required=True, label="Тип продукта/услуги")
+    gclass_pk = forms.IntegerField(widget=forms.HiddenInput())
+    goodstitle = forms.CharField(max_length=50, required=True, label="Наименование")
+    ed = forms.ChoiceField(choices=ED_CHOICES, label="Единица измерения")
+    time = forms.DateTimeField(label="Время")
+    amount = forms.FloatField(required=True, label="Количество")
+    cost = forms.DecimalField(max_digits=12,decimal_places=2,required=True, label="Стоимость")
+    currency = forms.ChoiceField(choices=CURR_CHOICES, label="Валюта")
+    #price = forms.DecimalField(max_digits=12,decimal_places=2,required=False, label="Цена")
