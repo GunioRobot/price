@@ -90,7 +90,7 @@ def gclass_title_lookup(request):
             value = request.GET[u'q']
             # Ignore queries shorter than length 2
             if len(value) > 1:
-                model_results = Gclass.objects.filter(title__icontains=value)
+                model_results = GClass.objects.filter(title__icontains=value)
                 results = [ (x.__unicode__(), x.id) for x in model_results ]
     json = simplejson.dumps(results)
     
