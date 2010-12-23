@@ -58,7 +58,7 @@ def trade_add(request):
 
             gclass1 = None
             if int(form.cleaned_data["gclass_pk"]) > 0:
-                gclass1 = None
+                gclass1 = GClass.objects.get(pk=form.cleaned_data["gclass_pk"])
             else:
                 gclass1 = GClass(title=form.cleaned_data["gclass"], section=GSection.objects.get(pk=1)) #TODO GSection
                 gclass1.save()
