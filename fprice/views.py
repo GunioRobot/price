@@ -68,6 +68,7 @@ def trade_add(request):
                 goods1 = Goods.objects.get(pk=form.cleaned_data["gtitle_pk"])
                 goods1.ed = form.cleaned_data["ed"]
                 goods1.gclass = gclass1
+                goods1.save()
             else:
                 goods1 = Goods(title=form.cleaned_data["gtitle"], ed=form.cleaned_data["ed"], gclass=gclass1)
                 goods1.save()
