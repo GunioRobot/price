@@ -57,6 +57,7 @@ def trade_add(request):
             price1 = "%.2f" % ( float(form.cleaned_data['cost']) / float(form.cleaned_data['amount']) )
 
             trade1 = Trade(
+                user = request.user,
                 shop = shop1,
                 goods = goods1,
                 time = form.cleaned_data["time"],
