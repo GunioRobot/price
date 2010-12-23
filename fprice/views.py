@@ -34,7 +34,7 @@ def trade_goods_list(request, goods_id):
 @login_required
 def trade_add(request):
 
-    price = 0
+    price1 = 0
     results = []
     if request.method == 'POST': # If the form has been submitted...
         form = TradeForm(request.POST) # A form bound to the POST data
