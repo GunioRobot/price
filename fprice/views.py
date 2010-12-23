@@ -88,7 +88,7 @@ def trade_add(request):
             trade1.save()
 
     else:
-        data = {'time': datetime.datetime.now}
+        data = {'time': datetime.datetime.now, 'trade_pk': '0', 'shop_pk': '0', 'gclass_pk': '0', 'gtitle_pk': '0' }
         form = TradeForm(initial=data) # An unbound form
 
     return render_to_response('trade_add.html',
@@ -98,7 +98,7 @@ def trade_add(request):
 
 def trade_view(request, trade_id):
     trade = Trade.objects.get(pk=trade_id)
-    data = {'trade_pk': trade.id, 'shop_pk': trade.shop.id, 'gclass_pk': trade.goods.gclass.id, 'currency': trade.currency, 'time': trade.time, 'gtitle': trade.goods.title, 'gtitle_pk': trade.goods.id, 'ed': trade.goods.ed, 'amount': trade.amount, 'price': trade.price, 'gclass': trade.goods.gclass, 'shop': trade.shop, 'cost': "%.2f" % (float(trade.amount) * float(trade.price))}
+    data = {'trade_pk': trade_id, 'shop_pk': trade.shop.id, 'gclass_pk': trade.goods.gclass.id, 'currency': trade.currency, 'time': trade.time, 'gtitle': trade.goods.title, 'gtitle_pk': trade.goods.id, 'ed': trade.goods.ed, 'amount': trade.amount, 'price': trade.price, 'gclass': trade.goods.gclass, 'shop': trade.shop, 'cost': "%.2f" % (float(trade.amount) * float(trade.price))}
     form = TradeForm(data)
 
     return render_to_response('trade_add.html',
