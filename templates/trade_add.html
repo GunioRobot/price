@@ -42,6 +42,25 @@
     );
 </script>
 
+<script>
+    $(function() {
+        $('#id_gtitle').autocomplete('{% url gtitle_lookup %}', {
+            dataType: 'json',
+            width: 500,
+            parse: function(data) {
+                return $.map(data, function(row) {
+                    return { data:row, value:row[1], result:row[0] };
+                });
+            }
+            }).result(
+                function(e, data, value) {
+                    $("#id_gtitle_pk").val(value);
+                }
+            );
+        }
+    );
+</script>
+
 
 <form action="/trade/add/" method="post">{% csrf_token %}
 <table>
@@ -49,6 +68,8 @@
 </table>
 <input type="submit" value="Добавить" />
 </form>
+
+{{ price }}
 
 {% if results %}
 {% for i in results %}

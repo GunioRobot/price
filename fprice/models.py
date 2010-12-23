@@ -57,7 +57,7 @@ class Shop(models.Model):
     addr = models.ForeignKey(Address, null=True, blank=True)
     
     def __unicode__(self):
-        return "%s" % ( self.addr.city.title + " - " + self.title + " (" + self.addr.__unicode__() +")")
+        return "%s" % (self.title + " (" + self.addr.city.title + ", " + self.addr.__unicode__() +")")
 
 class GSection(models.Model):
     title = models.CharField(max_length=50)
@@ -116,13 +116,14 @@ class Trade(models.Model):
 
 class TradeForm(forms.Form):
     shop = forms.CharField(max_length=100, required=True, label="Торговая точка")
-    shop_pk = forms.IntegerField(widget=forms.HiddenInput())
+    shop_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
     gclass = forms.CharField(max_length=50, required=True, label="Тип продукта/услуги")
-    gclass_pk = forms.IntegerField(widget=forms.HiddenInput())
-    goodstitle = forms.CharField(max_length=50, required=True, label="Наименование")
+    gclass_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    gtitle = forms.CharField(max_length=50, required=True, label="Наименование")
+    gtitle_pk = form.IntegerFielв(widget=forms.HiddenInput(), required=False)
     ed = forms.ChoiceField(choices=ED_CHOICES, label="Единица измерения")
     time = forms.DateTimeField(label="Время", required=True)
     amount = forms.FloatField(required=True, label="Количество")
-    cost = forms.DecimalField(max_digits=12,decimal_places=2,required=True, label="Стоимость")
+    cost = forms.DecimalField(max_digits=12, decimal_places=2, required=True, label="Стоимость")
     currency = forms.ChoiceField(choices=CURR_CHOICES, label="Валюта")
     #price = forms.DecimalField(max_digits=12,decimal_places=2,required=False, label="Цена")

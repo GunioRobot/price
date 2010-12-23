@@ -42,8 +42,30 @@ def trade_add(request):
             # Process the data in form.cleaned_data
             # ...
             #return HttpResponseRedirect('/thanks/') # Redirect after POST
-            results = GClass.objects.filter(title__icontains=form.cleaned_data['goodstitle'])
-            price = unicode(float(form.cleaned_data['cost']) / float(form.cleaned_data['amount']))
+            
+            #results = GClass.objects.filter(title__icontains=form.cleaned_data['goodstitle'])
+
+            if int(form.cleaned_data["shop_pk"]) > 0:
+                shop1 = Shop.objects.get(pk=form.cleaned_data["shop_pk"]
+
+            if int(form.cleaned_data["gclass_pk"]) > 0:
+                pass
+
+            if int(form.cleaned_data["gtitle_pk"]) > 0:
+                goods1 = Goods.objects.get(pk=form.cleaned_data["gtitle_pk"]
+
+            price1 = "%.2f" % float(form.cleaned_data['cost']) / float(form.cleaned_data['amount']))
+
+            trade1 = Trade(
+                shop = shop1
+                goods = goods1
+                time = form.cleaned_data("time")
+                amount = form.cleaned_data("amount")
+                price = price1
+                currency = form.cleaned_data("currency")
+            ) 
+            trade1.save()
+
     else:
         data = {'time': datetime.datetime.now}
         form = TradeForm(initial=data) # An unbound form
@@ -55,7 +77,7 @@ def trade_add(request):
 
 def trade_view(request, trade_id):
     trade = Trade.objects.get(pk=trade_id)
-    data = {'shop_pk': trade.shop.id, 'gclass_pk': trade.goods.gclass.id, 'currency': trade.currency, 'time': trade.time, 'goodstitle': trade.goods.title,'ed': trade.goods.ed, 'amount': trade.amount, 'price': trade.price, 'gclass': trade.goods.gclass, 'shop': trade.shop, 'cost': unicode(float(trade.amount) * float(trade.price))}
+    data = {'shop_pk': trade.shop.id, 'gclass_pk': trade.goods.gclass.id, 'currency': trade.currency, 'time': trade.time, 'gtitle': trade.goods.title, 'gtitle_pk': trade.goods.id, 'ed': trade.goods.ed, 'amount': trade.amount, 'price': trade.price, 'gclass': trade.goods.gclass, 'shop': trade.shop, 'cost': unicode(float(trade.amount) * float(trade.price))}
     form = TradeForm(data)
 
     return render_to_response('trade_add.html',
@@ -91,6 +113,20 @@ def gclass_title_lookup(request):
             # Ignore queries shorter than length 2
             if len(value) > 1:
                 model_results = GClass.objects.filter(title__icontains=value)
+                results = [ (x.__unicode__(), x.id) for x in model_results ]
+    json = simplejson.dumps(results)
+    
+    return HttpResponse(json, mimetype='application/json')
+
+
+def goods_title_lookup(request):
+    results = []
+    if request.method == "GET":
+        if request.GET.has_key(u'q'):
+            value = request.GET[u'q']
+            # Ignore queries shorter than length 2
+            if len(value) > 1:
+                model_results = Goods.objects.filter(title__icontains=value)
                 results = [ (x.__unicode__(), x.id) for x in model_results ]
     json = simplejson.dumps(results)
     
