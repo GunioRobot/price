@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
 
-from models import Trade, TradeForm, Shop, Goods, GClass
+from models import Trade, TradeForm, Shop, Goods, GClass, GSection
 from django.contrib.auth.decorators import login_required
 
 import simplejson
@@ -52,20 +52,29 @@ def trade_add(request):
             shop1 = None
             if int(form.cleaned_data["shop_pk"]) > 0:
                 shop1 = Shop.objects.get(pk=form.cleaned_data["shop_pk"])
+            else:
+                shop1 = Shop(title=form.cleaned_data["shop"])
+                shop1.save()
 
             gclass1 = None
             if int(form.cleaned_data["gclass_pk"]) > 0:
                 gclass1 = None
+            else:
+                gclass1 = GClass(title=form.cleaned_data["gclass"],section=GSection.objects.get(pk=1)) #TODO GSection
+                gclass1.save()
 
             goods1 = None
             if int(form.cleaned_data["gtitle_pk"]) > 0:
                 goods1 = Goods.objects.get(pk=form.cleaned_data["gtitle_pk"])
+            else:
+                goods1 = Goods(title=form.cleaned_data["gtitle"],ed=form.cleaned_data["ed"])
+                goods1.save()
+
+            price1 = "%.2f" % ( float(form.cleaned_data['cost']) / float(form.cleaned_data['amount']) )
 
             if isOldTrade:
-                price1 = form.cleaned_data['cost']
                 trade1 = Trade.objects.get(pk=form.cleaned_data["trade_pk"])
             else:
-                price1 = "%.2f" % ( float(form.cleaned_data['cost']) / float(form.cleaned_data['amount']) )
                 trade1 = Trade()
 
             trade1.user = request.user
