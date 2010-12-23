@@ -120,7 +120,7 @@ class TradeForm(forms.Form):
     gclass = forms.CharField(max_length=50, required=True, label="Тип продукта/услуги")
     gclass_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
     gtitle = forms.CharField(max_length=50, required=True, label="Наименование")
-    gtitle_pk = form.IntegerField(widget=forms.HiddenInput(), required=False)
+    gtitle_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
     ed = forms.ChoiceField(choices=ED_CHOICES, label="Единица измерения")
     time = forms.DateTimeField(label="Время", required=True)
     amount = forms.FloatField(required=True, label="Количество")
