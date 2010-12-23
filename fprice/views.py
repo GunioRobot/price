@@ -42,7 +42,7 @@ def trade_add(request):
             # Process the data in form.cleaned_data
             # ...
             #return HttpResponseRedirect('/thanks/') # Redirect after POST
-            
+
             #results = GClass.objects.filter(title__icontains=form.cleaned_data['goodstitle'])
 
             isOldTrade = False
@@ -60,14 +60,14 @@ def trade_add(request):
             if int(form.cleaned_data["gclass_pk"]) > 0:
                 gclass1 = None
             else:
-                gclass1 = GClass(title=form.cleaned_data["gclass"],section=GSection.objects.get(pk=1)) #TODO GSection
+                gclass1 = GClass(title=form.cleaned_data["gclass"], section=GSection.objects.get(pk=1)) #TODO GSection
                 gclass1.save()
 
             goods1 = None
             if int(form.cleaned_data["gtitle_pk"]) > 0:
                 goods1 = Goods.objects.get(pk=form.cleaned_data["gtitle_pk"])
             else:
-                goods1 = Goods(title=form.cleaned_data["gtitle"],ed=form.cleaned_data["ed"])
+                goods1 = Goods(title=form.cleaned_data["gtitle"], ed=form.cleaned_data["ed"], gclass=gclass1)
                 goods1.save()
 
             price1 = "%.2f" % ( float(form.cleaned_data['cost']) / float(form.cleaned_data['amount']) )
@@ -84,7 +84,7 @@ def trade_add(request):
             trade1.amount = form.cleaned_data["amount"]
             trade1.price = price1
             trade1.currency = form.cleaned_data["currency"]
- 
+
             trade1.save()
 
     else:
@@ -122,7 +122,7 @@ def shop_title_lookup(request):
                 model_results = Shop.objects.filter(title__icontains=value)
                 results = [ (x.__unicode__(), x.id) for x in model_results ]
     json = simplejson.dumps(results)
-    
+
     return HttpResponse(json, mimetype='application/json')
 
 
@@ -136,7 +136,7 @@ def gclass_title_lookup(request):
                 model_results = GClass.objects.filter(title__icontains=value)
                 results = [ (x.__unicode__(), x.id) for x in model_results ]
     json = simplejson.dumps(results)
-    
+
     return HttpResponse(json, mimetype='application/json')
 
 
@@ -150,5 +150,5 @@ def goods_title_lookup(request):
                 model_results = Goods.objects.filter(title__icontains=value)
                 results = [ (x.__unicode__(), x.id) for x in model_results ]
     json = simplejson.dumps(results)
-    
+
     return HttpResponse(json, mimetype='application/json')
