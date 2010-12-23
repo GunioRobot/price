@@ -46,23 +46,23 @@ def trade_add(request):
             #results = GClass.objects.filter(title__icontains=form.cleaned_data['goodstitle'])
 
             if int(form.cleaned_data["shop_pk"]) > 0:
-                shop1 = Shop.objects.get(pk=form.cleaned_data["shop_pk"]
+                shop1 = Shop.objects.get(pk=form.cleaned_data["shop_pk"])
 
             if int(form.cleaned_data["gclass_pk"]) > 0:
-                pass
+                gclass1 = None
 
             if int(form.cleaned_data["gtitle_pk"]) > 0:
-                goods1 = Goods.objects.get(pk=form.cleaned_data["gtitle_pk"]
+                goods1 = Goods.objects.get(pk=form.cleaned_data["gtitle_pk"])
 
-            price1 = "%.2f" % float(form.cleaned_data['cost']) / float(form.cleaned_data['amount']))
+            price1 = "%.2f" % ( float(form.cleaned_data['cost']) / float(form.cleaned_data['amount']) )
 
             trade1 = Trade(
-                shop = shop1
-                goods = goods1
-                time = form.cleaned_data("time")
-                amount = form.cleaned_data("amount")
-                price = price1
-                currency = form.cleaned_data("currency")
+                shop = shop1,
+                goods = goods1,
+                time = form.cleaned_data["time"],
+                amount = form.cleaned_data["amount"],
+                price = price1,
+                currency = form.cleaned_data["currency"],
             ) 
             trade1.save()
 
