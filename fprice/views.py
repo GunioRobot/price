@@ -45,26 +45,37 @@ def trade_add(request):
             
             #results = GClass.objects.filter(title__icontains=form.cleaned_data['goodstitle'])
 
+            isOldTrade = False
+            if int(form.cleaned_data["trade_pk"]) > 0:
+                isOldTrade = True
+
+            shop1 = None
             if int(form.cleaned_data["shop_pk"]) > 0:
                 shop1 = Shop.objects.get(pk=form.cleaned_data["shop_pk"])
 
+            gclass1 = None
             if int(form.cleaned_data["gclass_pk"]) > 0:
                 gclass1 = None
 
+            goods1 = None
             if int(form.cleaned_data["gtitle_pk"]) > 0:
                 goods1 = Goods.objects.get(pk=form.cleaned_data["gtitle_pk"])
 
-            price1 = "%.2f" % ( float(form.cleaned_data['cost']) / float(form.cleaned_data['amount']) )
+            if isOldTrade:
+                price1 = form.cleaned_data['cost']
+                trade1 = Trade.objects.get(pk=form.cleaned_data["trade_pk"])
+            else:
+                price1 = "%.2f" % ( float(form.cleaned_data['cost']) / float(form.cleaned_data['amount']) )
+                trade1 = Trade()
 
-            trade1 = Trade(
-                user = request.user,
-                shop = shop1,
-                goods = goods1,
-                time = form.cleaned_data["time"],
-                amount = form.cleaned_data["amount"],
-                price = price1,
-                currency = form.cleaned_data["currency"],
-            ) 
+            trade1.user = request.user
+            trade1.shop = shop1
+            trade1.goods = goods1
+            trade1.time = form.cleaned_data["time"]
+            trade1.amount = form.cleaned_data["amount"]
+            trade1.price = price1
+            trade1.currency = form.cleaned_data["currency"]
+ 
             trade1.save()
 
     else:
@@ -72,13 +83,13 @@ def trade_add(request):
         form = TradeForm(initial=data) # An unbound form
 
     return render_to_response('trade_add.html',
-        {'price': price, 'results': results, 'form': form},
+        {'price': price1, 'results': results, 'form': form},
         context_instance=RequestContext(request))
 
 
 def trade_view(request, trade_id):
     trade = Trade.objects.get(pk=trade_id)
-    data = {'shop_pk': trade.shop.id, 'gclass_pk': trade.goods.gclass.id, 'currency': trade.currency, 'time': trade.time, 'gtitle': trade.goods.title, 'gtitle_pk': trade.goods.id, 'ed': trade.goods.ed, 'amount': trade.amount, 'price': trade.price, 'gclass': trade.goods.gclass, 'shop': trade.shop, 'cost': unicode(float(trade.amount) * float(trade.price))}
+    data = {'trade_pk': trade.id, 'shop_pk': trade.shop.id, 'gclass_pk': trade.goods.gclass.id, 'currency': trade.currency, 'time': trade.time, 'gtitle': trade.goods.title, 'gtitle_pk': trade.goods.id, 'ed': trade.goods.ed, 'amount': trade.amount, 'price': trade.price, 'gclass': trade.goods.gclass, 'shop': trade.shop, 'cost': "%.2f" % (float(trade.amount) * float(trade.price))}
     form = TradeForm(data)
 
     return render_to_response('trade_add.html',

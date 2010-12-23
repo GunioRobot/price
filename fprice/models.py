@@ -115,6 +115,7 @@ class Trade(models.Model):
         return "%s" % ( self.goods.__unicode__() + " " + unicode(self.amount) )
 
 class TradeForm(forms.Form):
+    trade_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
     shop = forms.CharField(max_length=100, required=True, label="Торговая точка")
     shop_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
     gclass = forms.CharField(max_length=50, required=True, label="Тип продукта/услуги")
