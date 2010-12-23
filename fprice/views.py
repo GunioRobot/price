@@ -53,7 +53,7 @@ def trade_add(request):
             if int(form.cleaned_data["shop_pk"]) > 0:
                 shop1 = Shop.objects.get(pk=form.cleaned_data["shop_pk"])
             else:
-                shop1 = Shop(title=form.cleaned_data["shop"])
+                shop1 = Shop(title=form.cleaned_data["shop"], type='mag')
                 shop1.save()
 
             gclass1 = None
