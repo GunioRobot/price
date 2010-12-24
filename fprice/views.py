@@ -3,7 +3,7 @@
 
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from models import Trade, TradeForm, Shop, Goods, GClass, GSection
 from django.contrib.auth.decorators import login_required
@@ -89,6 +89,8 @@ def trade_add(request):
             trade1.currency = form.cleaned_data["currency"]
 
             trade1.save()
+
+            return HttpResponseRedirect("/")
 
     else:
         data = {'time': datetime.datetime.now, 'trade_pk': '0', 'shop_pk': '0', 'gclass_pk': '0', 'gtitle_pk': '0' }
