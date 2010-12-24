@@ -14,7 +14,8 @@
 {% endblock %}
 
 {% block body_script %}
-onload="init({{ shop.addr.x }}, {{ shop.addr.y }})"
+onload="var lon_x='{{ shop.addr.x }}';var lon_y='{{ shop.addr.y }}';
+    init(parseFloat(lon_x), parseFloat(lon_y));"
 {% endblock %}
 
 {% block title %}Торговая точка{% endblock %}
