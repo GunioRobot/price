@@ -8,7 +8,7 @@ from django import forms
 
 class Country(models.Model):
     title = models.CharField(max_length=50)
-    
+
     def __unicode__(self):
         return self.title
 
@@ -41,7 +41,7 @@ class Center(models.Model):
     title = models.CharField(max_length=50)
     descr = models.TextField(null=True, blank=True)
     addr = models.ForeignKey(Address)
-    
+
     def __unicode__(self):
         return self.title
 
@@ -55,16 +55,22 @@ class Shop(models.Model):
     type = models.CharField(max_length=3,choices=SHOP_CHOICES)
     center = models.ForeignKey(Center, null=True, blank=True)
     addr = models.ForeignKey(Address, null=True, blank=True)
-    
+
+    def get_addr(self):
+        res = ''
+        if self.addr:
+            res = self.addr.city.title + ', ' + self.addr.street.title + ', ' + self.addr.house
+        return res
+
     def __unicode__(self):
-        return "%s" % ( self.addr.city.title + " - " + self.title + " (" + self.addr.__unicode__() +")")
+        return "%s (%s)" % (self.title, self.get_addr())
 
 class GSection(models.Model):
     title = models.CharField(max_length=50)
 
     def __unicode__(self):
         return self.title
-        
+
 class GClass(models.Model):
     title = models.CharField(max_length=50)
     section = models.ForeignKey(GSection)
@@ -76,7 +82,7 @@ class GClass(models.Model):
 ED_CHOICES = (
     ('sh', 'шт/уп'),
     ('kg', 'кг'),
-    ('gr', 'грамм'),        
+    ('gr', 'грамм'),
     ('m', 'метр'),
     ('l', 'литр'),
 )
@@ -92,16 +98,17 @@ class Goods(models.Model):
     type = models.CharField(max_length=3,choices=GOODS_CHOICES, null=True, blank=True)
     descr = models.TextField(null=True, blank=True)
     ed = models.CharField(max_length=5,choices=ED_CHOICES)
-    
+
     def __unicode__(self):
         return "%s" % ( self.gclass.title + " - " + self.title )
 
+CURR_CHOICES = (
+    ('rur','рубли'),
+    ('usd','доллары'),
+    ('eur','евро'),
+)
+
 class Trade(models.Model):
-    CURR_CHOICES = (
-        ('rur','рубли'),
-        ('usd','доллары'),
-        ('eur','евро'),
-    )
     user = models.ForeignKey(User)
     shop = models.ForeignKey(Shop)
     goods = models.ForeignKey(Goods)
@@ -109,17 +116,21 @@ class Trade(models.Model):
     amount = models.FloatField()
     price = models.DecimalField(max_digits=19, decimal_places=2)
     currency = models.CharField(max_length=3,choices=CURR_CHOICES)
-    
+
     def __unicode__(self):
         return "%s" % ( self.goods.__unicode__() + " " + unicode(self.amount) )
 
 class TradeForm(forms.Form):
-    shop = forms.CharField(max_length=50, required=True)
-    shop_pk = forms.IntegerField(widget=forms.HiddenInput())
-    gtype = forms.CharField(max_length=50, required=True)
-    gtype_pk = forms.IntegerField(widget=forms.HiddenInput())
-    goodstitle = forms.CharField(max_length=50, required=True)
-    ed = forms.ChoiceField(choices=ED_CHOICES)
-    amount = forms.FloatField(required=True)
-    cost = forms.DecimalField(max_digits=12,decimal_places=2,required=True)
-    price = forms.DecimalField(max_digits=12,decimal_places=2,required=False)
+    trade_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    shop = forms.CharField(max_length=100, required=True, label="Торговая точка")
+    shop_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    gclass = forms.CharField(max_length=50, required=True, label="Тип продукта/услуги")
+    gclass_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    gtitle = forms.CharField(max_length=50, required=True, label="Наименование")
+    gtitle_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    ed = forms.ChoiceField(choices=ED_CHOICES, label="Единица измерения")
+    time = forms.DateTimeField(label="Время", required=True)
+    amount = forms.FloatField(required=True, label="Количество")
+    cost = forms.DecimalField(max_digits=12, decimal_places=2, required=True, label="Стоимость")
+    currency = forms.ChoiceField(choices=CURR_CHOICES, label="Валюта")
+    #price = forms.DecimalField(max_digits=12,decimal_places=2,required=False, label="Цена")

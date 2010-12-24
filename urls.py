@@ -11,7 +11,7 @@ from django.conf.urls.defaults import *
 from django.contrib import admin
 admin.autodiscover()
 
-from fprice.views import trade_last_list, trade_add, trade_view, shop_info, trade_goods_list
+#from fprice.views import trade_last_list, trade_add, trade_view, shop_info, trade_goods_list
 
 urlpatterns = patterns('fprice.views',
     # Example:
@@ -22,9 +22,11 @@ urlpatterns = patterns('fprice.views',
     (r'^trade/(?P<trade_id>\d+)', 'trade_view'),
     (r'^shop/(?P<shop_id>\d+)', 'shop_info'),
     (r'^goods/(?P<goods_id>\d+)', 'trade_goods_list'),
-    (r'^accounts/', include('registration.urls')),    
+    (r'^accounts/', include('registration.urls')),
 
-    url(r'^title_lookup/', 'shop_title_lookup', name='title_lookup'),
+    url(r'^shop_lookup/', 'shop_title_lookup', name='shop_lookup'),
+    url(r'^gclass_lookup/', 'gclass_title_lookup', name='gclass_lookup'),
+    url(r'^gtitle_lookup/', 'goods_title_lookup', name='gtitle_lookup'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
