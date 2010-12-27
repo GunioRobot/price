@@ -31,11 +31,11 @@ def profile(request):
 
 def trade_goods_list(request, goods_id):
     gclass1 = GClass.objects.get(pk=goods_id)
-    goods_list = Trade.objects.filter(goods__gclass=gclass1).order_by('-time')
+    trade_list = Trade.objects.filter(goods__gclass=gclass1).order_by('-time')
     #goods_list = Trade.objects.order_by('-time')#[:10]
 
-    return render_to_response('goods_last.html',
-        {'goods1': gclass1, 'goods_list': goods_list},
+    return render_to_response('trade_last.html',
+        {'goods1': gclass1, 'trade_list': trade_list},
         context_instance=RequestContext(request))
 
 
