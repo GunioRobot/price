@@ -21,6 +21,14 @@ def trade_last_list(request):
         context_instance=RequestContext(request))
 
 
+def profile(request):
+    trade_list = Trade.objects.filter(user=request.user).order_by('-time')#[:10]
+
+    return render_to_response('trade_last.html',
+        {'trade_list': trade_list},
+        context_instance=RequestContext(request))
+
+
 def trade_goods_list(request, goods_id):
     gclass1 = GClass.objects.get(pk=goods_id)
     goods_list = Trade.objects.filter(goods__gclass=gclass1).order_by('-time')

@@ -23,6 +23,7 @@ urlpatterns = patterns('fprice.views',
     (r'^shop/(?P<shop_id>\d+)', 'shop_info'),
     (r'^goods/(?P<goods_id>\d+)', 'trade_goods_list'),
     (r'^accounts/', include('registration.urls')),
+    (r'^accounts/profile/', 'profile'),
 
     url(r'^shop_lookup/', 'shop_title_lookup', name='shop_lookup'),
     url(r'^gclass_lookup/', 'gclass_title_lookup', name='gclass_lookup'),
