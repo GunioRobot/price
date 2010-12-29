@@ -151,6 +151,7 @@ class Trade(models.Model):
     amount = models.FloatField()
     price = models.DecimalField(max_digits=19, decimal_places=2)
     currency = models.CharField(max_length=3,choices=CURR_CHOICES)
+    cost = models.DecimalField(max_digits=12, decimal_places=2)
 
     def __unicode__(self):
         return "%s" % ( self.goods.__unicode__() + " " + unicode(self.amount) )
