@@ -30,12 +30,12 @@ def profile(request):
 
 
 def trade_goods_list(request, goods_id):
-    gclass1 = GClass.objects.get(pk=goods_id)
-    trade_list = Trade.objects.filter(goods__gclass=gclass1).order_by('-time')
+    goods1 = Goods.objects.get(pk=goods_id)
+    trade_list = Trade.objects.filter(goods=goods1).order_by('-time')
     #goods_list = Trade.objects.order_by('-time')#[:10]
 
     return render_to_response('trade_last.html',
-        {'goods1': gclass1, 'trade_list': trade_list},
+        {'goods1': goods1, 'trade_list': trade_list},
         context_instance=RequestContext(request))
 
 
@@ -64,21 +64,22 @@ def trade_add(request):
                 shop1 = Shop(title=form.cleaned_data["shop"], type='mag')
                 shop1.save()
 
-            gclass1 = None
-            if int(form.cleaned_data["gclass_pk"]) > 0:
-                gclass1 = GClass.objects.get(pk=form.cleaned_data["gclass_pk"])
-            else:
-                gclass1 = GClass(title=form.cleaned_data["gclass"], section=GSection.objects.get(pk=1)) #TODO GSection
-                gclass1.save()
+            #gclass1 = None
+            #if int(form.cleaned_data["gclass_pk"]) > 0:
+            #    gclass1 = GClass.objects.get(pk=form.cleaned_data["gclass_pk"])
+            #else:
+            #    gclass1 = GClass(title=form.cleaned_data["gclass"], section=GSection.objects.get(pk=1)) #TODO GSection
+            #    gclass1.save()
 
             goods1 = None
             if int(form.cleaned_data["gtitle_pk"]) > 0:
                 goods1 = Goods.objects.get(pk=form.cleaned_data["gtitle_pk"])
+                goods1.title = form.cleaned_data["gtitle"]
                 goods1.ed = form.cleaned_data["ed"]
-                goods1.gclass = gclass1
+                #goods1.gclass = gclass1
                 goods1.save()
             else:
-                goods1 = Goods(title=form.cleaned_data["gtitle"], ed=form.cleaned_data["ed"], gclass=gclass1)
+                goods1 = Goods(title=form.cleaned_data["gtitle"], ed=form.cleaned_data["ed"])
                 goods1.save()
 
             price1 = "%.2f" % ( float(form.cleaned_data['cost']) / float(form.cleaned_data['amount']) )
@@ -94,6 +95,7 @@ def trade_add(request):
             trade1.time = form.cleaned_data["time"]
             trade1.amount = form.cleaned_data["amount"]
             trade1.price = price1
+            trade1.cost = form.cleaned_data["cost"]
             trade1.currency = form.cleaned_data["currency"]
 
             trade1.save()
@@ -111,7 +113,7 @@ def trade_add(request):
 
 def trade_view(request, trade_id):
     trade = Trade.objects.get(pk=trade_id)
-    data = {'trade_pk': trade_id, 'shop_pk': trade.shop.id, 'gclass_pk': trade.goods.gclass.id, 'currency': trade.currency, 'time': trade.time, 'gtitle': trade.goods.title, 'gtitle_pk': trade.goods.id, 'ed': trade.goods.ed, 'amount': trade.amount, 'price': trade.price, 'gclass': trade.goods.gclass, 'shop': trade.shop, 'cost': "%.2f" % (float(trade.amount) * float(trade.price))}
+    data = {'trade_pk': trade_id, 'shop_pk': trade.shop.id, 'currency': trade.currency, 'time': trade.time, 'gtitle': trade.goods.title, 'gtitle_pk': trade.goods.id, 'ed': trade.goods.ed, 'amount': trade.amount, 'price': trade.price, 'shop': trade.shop, 'cost': trade.cost }
     form = TradeForm(data)
 
     return render_to_response('trade_add.html',

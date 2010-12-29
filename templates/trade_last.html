@@ -7,13 +7,13 @@
 
 {% for trade in trade_list %}
 <p><i>{# trade.user #}{{ trade.time|date:"j b" }}
-</i> - <b><a href="/goods/{{ trade.goods.gclass.id }}">{{ trade.goods.gclass.title }}</a> {{ trade.goods.title }} - 
+</i> - <b><a href="/goods/{{ trade.goods.id }}">{{ trade.goods.title }}</a> - 
 {% if trade.user = user %}
 <a href="/trade/{{ trade.id }}">{{ trade.price }}</a> 
 {% else %}
 {{ trade.price }}
 {% endif %}
-{{ trade.currency }}/ed
+{{ trade.currency }}/{{ trade.goods.ed }}
 
 </b> ({{ trade.shop.addr.city }}, <a href="/shop/{{ trade.shop.id }}" title="{{ trade.shop.addr.city }}, {{ trade.shop.addr.street }}">{{ trade.shop.title }}</a>)</p>
 
