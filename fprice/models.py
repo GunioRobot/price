@@ -169,4 +169,4 @@ class TradeForm(forms.Form):
     amount = forms.FloatField(required=True, label="Количество")
     cost = forms.DecimalField(max_digits=12, decimal_places=2, required=True, label="Стоимость")
     currency = forms.ChoiceField(choices=CURR_CHOICES, label="Валюта")
-    price = forms.DecimalField(max_digits=12,decimal_places=2,required=False, label="Цена")
+    #price = forms.DecimalField(max_digits=12,decimal_places=2,required=False, label="Цена")
