@@ -12,6 +12,10 @@ class Country(models.Model):
     def __unicode__(self):
         return self.title
 
+    class Meta:
+        ordering = ["title"]
+
+
 class City(models.Model):
     title = models.CharField(max_length=50)
     country = models.ForeignKey(Country)
@@ -19,11 +23,19 @@ class City(models.Model):
     def __unicode__(self):
         return self.title
 
+    class Meta:
+        ordering = ["title"]
+
+
 class Street(models.Model):
     title = models.CharField(max_length=100)
 
     def __unicode__(self):
         return self.title
+
+    class Meta:
+        ordering = ["title"]
+
 
 class Address(models.Model):
     city = models.ForeignKey(City)
@@ -37,6 +49,7 @@ class Address(models.Model):
     def __unicode__(self):
         return "%s" % ( self.street.title + " " + unicode(self.house) )
 
+
 class Center(models.Model):
     title = models.CharField(max_length=50)
     descr = models.TextField(null=True, blank=True)
@@ -44,6 +57,10 @@ class Center(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    class Meta:
+        ordering = ["title"]
+
 
 class Shop(models.Model):
     SHOP_CHOICES = (
@@ -65,11 +82,19 @@ class Shop(models.Model):
     def __unicode__(self):
         return "%s (%s)" % (self.title, self.get_addr())
 
+    class Meta:
+        ordering = ["title"]
+
+
 class GSection(models.Model):
     title = models.CharField(max_length=50)
 
     def __unicode__(self):
         return self.title
+
+    class Meta:
+        ordering = ["title"]
+
 
 class GClass(models.Model):
     title = models.CharField(max_length=50)
@@ -77,6 +102,9 @@ class GClass(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    class Meta:
+        ordering = ["title"]
 
 
 ED_CHOICES = (
@@ -102,6 +130,10 @@ class Goods(models.Model):
     def __unicode__(self):
         return "%s" % ( self.gclass.title + " - " + self.title )
 
+    class Meta:
+        ordering = ["gclass__title", "title"]
+
+
 CURR_CHOICES = (
     ('rur','рубли'),
     ('usd','доллары'),
@@ -119,6 +151,7 @@ class Trade(models.Model):
 
     def __unicode__(self):
         return "%s" % ( self.goods.__unicode__() + " " + unicode(self.amount) )
+
 
 class TradeForm(forms.Form):
     trade_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
