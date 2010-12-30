@@ -110,9 +110,9 @@ class GClass(models.Model):
 ED_CHOICES = (
     ('sh', 'шт'),
     ('kg', 'кг'),
-    ('gr', 'грамм'),
-    ('m', 'метр'),
-    ('l', 'литр'),
+    ('l', 'л'),
+    ('m', 'м'),
+    ('gr', 'гр'),
 )
 
 class Goods(models.Model):
