@@ -148,10 +148,12 @@ class Trade(models.Model):
     shop = models.ForeignKey(Shop)
     goods = models.ForeignKey(Goods)
     time = models.DateTimeField(default=datetime.now) #(auto_now_add=True)
+    time_add = models.DateTimeField(auto_now_add=True)
     amount = models.FloatField()
     price = models.DecimalField(max_digits=19, decimal_places=2)
     currency = models.CharField(max_length=3,choices=CURR_CHOICES)
     cost = models.DecimalField(max_digits=12, decimal_places=2)
+    spytrade = models.BooleanField(default=False)
 
     def __unicode__(self):
         return "%s" % ( self.goods.__unicode__() + " " + unicode(self.amount) )
