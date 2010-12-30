@@ -114,7 +114,7 @@ def trade_add(request):
 
 def trade_view(request, trade_id):
     trade = Trade.objects.get(pk=trade_id)
-    data = {'trade_pk': trade_id, 'shop_pk': trade.shop.id, 'currency': trade.currency, 'time': trade.time, 'gtitle': trade.goods.title, 'gtitle_pk': trade.goods.id, 'ed': trade.goods.ed, 'amount': trade.amount, 'price': trade.price, 'shop': trade.shop, 'cost': trade.cost }
+    data = {'trade_pk': trade_id, 'shop_pk': trade.shop.id, 'currency': trade.currency, 'time': trade.time, 'gtitle': trade.goods.title, 'gtitle_pk': trade.goods.id, 'ed': trade.goods.ed, 'amount': trade.amount, 'price': trade.price, 'shop': trade.shop, 'cost': trade.cost, 'spytrade': trade.spytrade }
     form = TradeForm(data)
 
     return render_to_response('trade_add.html',
