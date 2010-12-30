@@ -9,7 +9,7 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         
         # Adding field 'Trade.time_add'
-        db.add_column('fprice_trade', 'time_add', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, default=<built-in method now of type object at 0xb728b700>, blank=True), keep_default=False)
+        db.add_column('fprice_trade', 'time_add', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now), keep_default=False)
 
         # Adding field 'Trade.spytrade'
         db.add_column('fprice_trade', 'spytrade', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
@@ -134,7 +134,7 @@ class Migration(SchemaMigration):
             'shop': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['fprice.Shop']"}),
             'spytrade': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'time': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'time_add': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'time_add': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
         }
     }

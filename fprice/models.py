@@ -148,7 +148,7 @@ class Trade(models.Model):
     shop = models.ForeignKey(Shop)
     goods = models.ForeignKey(Goods)
     time = models.DateTimeField(default=datetime.now) #(auto_now_add=True)
-    time_add = models.DateTimeField(auto_now_add=True)
+    time_add = models.DateTimeField(default=datetime.now,editable=False)
     amount = models.FloatField()
     price = models.DecimalField(max_digits=19, decimal_places=2)
     currency = models.CharField(max_length=3,choices=CURR_CHOICES)
