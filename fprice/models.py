@@ -138,9 +138,9 @@ class Goods(models.Model):
 
 
 CURR_CHOICES = (
-    ('rur','рубли'),
-    ('usd','доллары'),
-    ('eur','евро'),
+    ('rur','руб'),
+    ('usd','usd'),
+    ('eur','eur'),
 )
 
 class Trade(models.Model):
