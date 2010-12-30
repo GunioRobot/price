@@ -161,7 +161,7 @@ class Trade(models.Model):
 
 class TradeForm(forms.Form):
     trade_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
-    spytrade = forms.BooleanField(label="Подсмотрено")
+    spytrade = forms.BooleanField(label="Подсмотрено", required=False)
     time = forms.DateTimeField(label="Время", required=True)
     shop = forms.CharField(max_length=100, required=True, label="Торговая точка")
     shop_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
