@@ -108,7 +108,7 @@ class GClass(models.Model):
 
 
 ED_CHOICES = (
-    ('sh', 'шт/уп'),
+    ('sh', 'шт'),
     ('kg', 'кг'),
     ('gr', 'грамм'),
     ('m', 'метр'),
@@ -161,6 +161,8 @@ class Trade(models.Model):
 
 class TradeForm(forms.Form):
     trade_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    spytrade = forms.BooleanField(label="Подсмотрено")
+    time = forms.DateTimeField(label="Время", required=True)
     shop = forms.CharField(max_length=100, required=True, label="Торговая точка")
     shop_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
     #gclass = forms.CharField(max_length=50, required=True, label="Тип продукта/услуги")
@@ -168,7 +170,6 @@ class TradeForm(forms.Form):
     gtitle = forms.CharField(max_length=50, required=True, label="Наименование")
     gtitle_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
     ed = forms.ChoiceField(choices=ED_CHOICES, label="Единица измерения")
-    time = forms.DateTimeField(label="Время", required=True)
     amount = forms.FloatField(required=True, label="Количество")
     cost = forms.DecimalField(max_digits=12, decimal_places=2, required=True, label="Стоимость")
     currency = forms.ChoiceField(choices=CURR_CHOICES, label="Валюта")
