@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from models import Country, City, Street, Address, Center, Shop, GSection, GClass, Goods, Trade
 from django.contrib import admin
 

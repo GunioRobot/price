@@ -97,6 +97,7 @@ def trade_add(request):
             trade1.price = price1
             trade1.cost = form.cleaned_data["cost"]
             trade1.currency = form.cleaned_data["currency"]
+            trade1.spytrade = form.cleaned_data["spytrade"]
 
             trade1.save()
 
