@@ -16,7 +16,7 @@ import datetime
 
 def trade_last_list(request):
     trade_list = Trade.objects.order_by('-time')#[:10]
-    goods_top = Trade.objects.values('goods','goods__title').annotate(Count('goods')).order_by('-goods__count')[:10]
+    goods_top = Trade.objects.values('goods__id','goods__title').annotate(goods_count=Count('goods')).order_by('-goods_count')[:10]
 
     return render_to_response('trade_last.html',
         {'trade_list': trade_list, 'goods_top': goods_top},
