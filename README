@@ -1,0 +1,13 @@
+PRICE DJANGO PROJECT
+====================
+
+DEPENDENCIES
+------------
+
+south
+registration
+geoip?
+
+jquery
+jquery-autocomplete
+openlayers?
