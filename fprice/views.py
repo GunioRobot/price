@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 from models import Trade, TradeForm, Shop, Goods, GClass, GSection
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 
 import simplejson
 from urllib import unquote
