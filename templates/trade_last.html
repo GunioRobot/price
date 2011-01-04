@@ -5,6 +5,19 @@
 
 {% block content %}
 
+
+{% if goods_top %}
+<table width=100%>
+{% for goods in goods_top %}
+<tr>
+<td>{{ goods.goods__title }}</td>
+<td>{{ goods.goods__count }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}
+
+
 <table width=100%>
 
 {% for trade in trade_list %}
