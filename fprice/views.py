@@ -160,6 +160,7 @@ def shop_info(request, shop_id):
     else:
         lon_x = shop.addr.x
         lat_y = shop.addr.y
+        zoom = 16
 
     return render_to_response('shop_info.html',
         {'shop': shop, 'lat_y': lat_y, 'lon_x': lon_x, 'zoom': zoom, 'location': location},
