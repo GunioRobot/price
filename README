@@ -6,8 +6,7 @@ DEPENDENCIES
 
 south
 registration
-geoip?
 
 jquery
 jquery-autocomplete
-openlayers?
+openlayers
