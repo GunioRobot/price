@@ -2,32 +2,75 @@
 
 <html>
 <head>
-<title>OpenPrice</title>
+<title>PriceSpeak</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 <script type="text/javascript" src="/media/js/jquery.min.js"></script>
+
 <script type="text/javascript" src="/media/js/jquery.bgiframe.min.js"></script>
 <script type="text/javascript" src="/media/js/jquery.autocomplete.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/media/js/jquery.autocomplete.css" />
 
-
 <style>
     body {
-        font-family:sans-serif;
+        font-family:Ubuntu, sans-serif;
         font-size:11px;
-        background:#eeeeee;
+        background:#ccc;
         color:#555;
         text-align:center;
     }
 
-    h1, h2 {
-        border-bottom:1px #555 solid;
-        color:#c50000;
+    #container {
+        width:800px;
+        background:#ccc;
+        text-align:center;
+        margin:0 auto;
+        padding:0;
+    }
+
+    #header {
+
+    }
+
+    #menu {
+
+    }
+
+    #breadcrumbs {
+        margin:10px 0px 10px 0;
+        padding: 3px;
+        background:#bbb;
+        text-align:left;
+    }
+
+    #left {
+        background:#ddd;
+        float:left;
+        width:245px;
+        text-align:left;
+    }
+
+    #content {
+        background:#ddd;
+        float:right;
+        width:550px;
+        text-align:justify;
+        margin: 0px 0px 10px 0px;
+    }
+
+    #footer {
+        clear:both;
+        background:#ddd;
+    }
+
+    table, tr, td {
+        text-align:left;
     }
 
     a {
         color:#a52919
+        text-decoration: none;
     }
 </style>
 
@@ -36,13 +79,13 @@
 </head>
 <body align=center {% block body_script %}{% endblock %}>
 
-<table width=1024 align=center><tr><td>
+<div id=container>
 
+<div id=header>
+    <h1><img src="/media/earth.gif">PriceSpeak</h1>
+</div>
 
-<center><h1><img src="/media/earth.gif">openprice</h1></center>
-
-
-<div align=center>
+<div id=menu>
     <a href="/">главная</a> |
     {% if user.is_authenticated %}
     <a href="/accounts/profile/">профиль</a> |
@@ -56,18 +99,32 @@
     {% endif %}
 </div>
 
-<h2>{% block title %}{% endblock %}</h2>
+<div id=breadcrumbs>
+<a href="/">PriceSpeak</a> - 
+    {% block breadcrumbs %}
+    Главная
+    {% endblock %}
+</div>
 
+<div id=left>
+    {% block left %}
 
-<div align=left>
+    {% endblock %}
+</div>
+
+<div id=content>
+    {% block title %}
+
+    {% endblock %}
     {% block content %}
 
     {% endblock %}
 </div>
 
+<div id=footer>
+    author: 0xCode corporation
+</div>
 
-</td></tr></table>
-
-<div align=center>author: bydlocode foundation</div>
+</div> <!-- id=container -->
 
 </body></html>
