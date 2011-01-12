@@ -23,6 +23,7 @@
 {% for trade in trade_list %}
 <tr>
 <td><i>{# trade.user #}{{ trade.time|date:"j b" }}</i></td>
+<td><a href="/shop/{{ trade.shop.id }}" title="{{ trade.shop.addr.city }}, {{ trade.shop.addr.street }}, {{ trade.shop.title }}">маг</a></td>
 <td align=right>
 {% if trade.user = user %}
 <a href="/trade/{{ trade.id }}">{{ trade.price }}</a> 
@@ -30,12 +31,9 @@
 {{ trade.price }}
 {% endif %}
 </td>
+<td>{{ trade.get_currency_display }}/{{ trade.goods.get_ed_display }}</td>
 <td><a href="/goods/{{ trade.goods.id }}">{{ trade.goods.title }}</a></td>
-<td>
-{{ trade.get_currency_display }}/{{ trade.goods.get_ed_display }}
-</td>
 
-<td>{{ trade.shop.addr.city }}, <a href="/shop/{{ trade.shop.id }}" title="{{ trade.shop.addr.city }}, {{ trade.shop.addr.street }}">{{ trade.shop.title }}</a></td>
 </tr>
 {% endfor %}
 
