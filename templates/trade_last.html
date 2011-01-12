@@ -1,22 +1,23 @@
 {% extends "base.html" %}
-{% load markup %}
 
-{% block title %}последние{% endblock %}
+{% block title %}<b>последние добавления:</b>{% endblock %}
 
-{% block content %}
-
+{% block left %}
 
 {% if goods_top %}
-<table width=20%>
+<table width=100%>
 {% for goods in goods_top %}
 <tr>
-<td><a href="/goods/{{ goods.goods__id }}">{{ goods.goods__title }}</a></td>
 <td>{{ goods.goods_count }}</td>
+<td><a href="/goods/{{ goods.goods__id }}">{{ goods.goods__title }}</a></td>
 </tr>
 {% endfor %}
 </table>
 {% endif %}
 
+{% endblock %}
+
+{% block content %}
 
 <table width=100%>
 
@@ -24,7 +25,7 @@
 <tr>
 <td><i>{# trade.user #}{{ trade.time|date:"j b" }}</i></td>
 <td><a href="/shop/{{ trade.shop.id }}" title="{{ trade.shop.addr.city }}, {{ trade.shop.addr.street }}, {{ trade.shop.title }}">маг</a></td>
-<td align=right>
+<td style="text-align:right">
 {% if trade.user = user %}
 <a href="/trade/{{ trade.id }}">{{ trade.price }}</a> 
 {% else %}
