@@ -21,7 +21,7 @@
 
 <table width=100%>
 
-{% for trade in trade_list %}
+{% for trade in trade_list.object_list %}
 <tr>
 <td><i>{# trade.user #}{{ trade.time|date:"j b" }}</i></td>
 <td><a href="/shop/{{ trade.shop.id }}" title="{{ trade.shop.addr.city }}, {{ trade.shop.addr.street }}, {{ trade.shop.title }}">маг</a></td>
