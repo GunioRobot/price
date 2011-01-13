@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}новая цена/покупка{% endblock %}
+{% block title %}<b>новая цена/покупка</b>{% endblock %}
 
 {% block content %}
 
@@ -47,18 +47,22 @@
         $('#id_gtitle').autocomplete('{% url gtitle_lookup %}', {
             dataType: 'json',
             width: 500,
+	    extraParams: {
+        	format: 'json' // pass the required context to the Zend Controller
+	    },
             parse: function(data) {
                 return $.map(data, function(row) {
                     return { data:row, value:row[1], result:row[0] };
                 });
             }
-            }).result(
+
+        }).result(
                 function(e, data, value) {
                     $("#id_gtitle_pk").val(value);
                 }
+
             );
-        }
-    );
+    });
 </script>
 
 

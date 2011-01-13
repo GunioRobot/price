@@ -5,10 +5,11 @@
 {% block left %}
 
 {% if goods_top %}
+<b>популярные продукты:</b>
 <table width=100%>
 {% for goods in goods_top %}
 <tr>
-<td>{{ goods.goods_count }}</td>
+<td>{{ goods.goods_count }}x</td>
 <td><a href="/goods/{{ goods.goods__id }}">{{ goods.goods__title }}</a></td>
 </tr>
 {% endfor %}
@@ -40,6 +41,8 @@
 
 </table>
 
+    {% if trade_list.paginator.num_pages > 1 %}
+
         {% if trade_list.has_previous %}
             <a href="?page={{ trade_list.previous_page_number }}">previous</a>
         {% endif %}
@@ -51,6 +54,8 @@
         {% if trade_list.has_next %}
             <a href="?page={{ trade_list.next_page_number }}">next</a>
         {% endif %}
+
+    {% endif %}
 
 
 {% endblock %}
