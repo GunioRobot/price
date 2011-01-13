@@ -8,6 +8,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from models import Trade, TradeForm, Shop, Goods, GClass, GSection
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
 import simplejson
 from urllib import unquote
@@ -18,8 +19,22 @@ def trade_last_list(request):
     trade_list = Trade.objects.order_by('-time')#[:10]
     goods_top = Trade.objects.values('goods__id','goods__title').annotate(goods_count=Count('goods')).order_by('-goods_count')[:10]
 
+    paginator = Paginator(trade_list, 25) # Show 25 contacts per page
+
+    # Make sure page request is an int. If not, deliver first page.
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        trades = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        trades = paginator.page(paginator.num_pages)
+
     return render_to_response('trade_last.html',
-        {'trade_list': trade_list, 'goods_top': goods_top},
+        {'trade_list': trades, 'goods_top': goods_top},
         context_instance=RequestContext(request))
 
 
