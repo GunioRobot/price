@@ -16,17 +16,15 @@ import datetime
 
 
 def trade_last_list(request):
-    trade_list = Trade.objects.order_by('-time')#[:10]
     goods_top = Trade.objects.values('goods__id','goods__title').annotate(goods_count=Count('goods')).order_by('-goods_count')[:10]
+    trade_list = Trade.objects.order_by('-time')#[:10]
 
-    paginator = Paginator(trade_list, 25) # Show 25 contacts per page
-
+    paginator = Paginator(trade_list, 25)
     # Make sure page request is an int. If not, deliver first page.
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
         page = 1
-
     # If page request (9999) is out of range, deliver last page of results.
     try:
         trades = paginator.page(page)
@@ -39,25 +37,52 @@ def trade_last_list(request):
 
 
 def profile(request):
+    goods_top = Trade.objects.values('goods__id','goods__title').annotate(goods_count=Count('goods')).order_by('-goods_count')[:10]
     trade_list = Trade.objects.filter(user=request.user).order_by('-time')#[:10]
 
+    paginator = Paginator(trade_list, 25)
+    # Make sure page request is an int. If not, deliver first page.
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        trades = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        trades = paginator.page(paginator.num_pages)
+
     return render_to_response('trade_last.html',
-        {'trade_list': trade_list},
+        {'trade_list': trades, 'goods_top': goods_top},
         context_instance=RequestContext(request))
 
 
 def trade_goods_list(request, goods_id):
+    goods_top = Trade.objects.values('goods__id','goods__title').annotate(goods_count=Count('goods')).order_by('-goods_count')[:10]
     goods1 = Goods.objects.get(pk=goods_id)
     trade_list = Trade.objects.filter(goods=goods1).order_by('-time')
     #goods_list = Trade.objects.order_by('-time')#[:10]
 
+    paginator = Paginator(trade_list, 25)
+    # Make sure page request is an int. If not, deliver first page.
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        trades = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        trades = paginator.page(paginator.num_pages)
+
     return render_to_response('trade_last.html',
-        {'goods1': goods1, 'trade_list': trade_list},
+        {'goods1': goods1, 'trade_list': trades, 'goods_top': goods_top},
         context_instance=RequestContext(request))
 
 
 @login_required
 def trade_add(request):
+    goods_top = Trade.objects.values('goods__id','goods__title').annotate(goods_count=Count('goods')).order_by('-goods_count')[:10]
 
     price1 = 0
     results = []
@@ -125,13 +150,20 @@ def trade_add(request):
         form = TradeForm(initial=data) # An unbound form
 
     return render_to_response('trade_add.html',
-        {'price': price1, 'results': results, 'form': form},
+        {'price': price1, 'results': results, 'form': form, 'goods_top': goods_top},
         context_instance=RequestContext(request))
 
 
 def trade_view(request, trade_id):
     trade = Trade.objects.get(pk=trade_id)
-    data = {'trade_pk': trade_id, 'shop_pk': trade.shop.id, 'currency': trade.currency, 'time': trade.time, 'gtitle': trade.goods.title, 'gtitle_pk': trade.goods.id, 'ed': trade.goods.ed, 'amount': trade.amount, 'price': trade.price, 'shop': trade.shop, 'cost': trade.cost, 'spytrade': trade.spytrade }
+
+    data = {'trade_pk': trade_id, 'time': trade.time,
+            'shop_pk': trade.shop.id, 'shop': trade.shop, 
+            'gtitle_pk': trade.goods.id, 'gtitle': trade.goods.title, 'ed': trade.goods.ed,
+            'amount': trade.amount, 'price': trade.price, 'cost': trade.cost,
+            'currency': trade.currency, 'spytrade': trade.spytrade,
+    }
+
     form = TradeForm(data)
 
     return render_to_response('trade_add.html',
