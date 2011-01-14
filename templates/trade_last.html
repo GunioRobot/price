@@ -39,7 +39,7 @@
 <td><i>{# trade.user #}{{ trade.time|date:"j b" }}</i></td>
 <td><a href="/shop/{{ trade.shop.id }}" title="{{ trade.shop.addr.city }}, {{ trade.shop.addr.street }}, {{ trade.shop.title }}">маг</a></td>
 <td style="text-align:right">
-{% if sum7 %}<img src="/media/eye.png"> {% endif %}
+{% if sum7 and trade.spytrade %}<img src="/media/eye.png"> {% endif %}
 {% if trade.user = user %}
 <a href="/trade/{{ trade.id }}">{{ trade.price }}</a> 
 {% else %}
