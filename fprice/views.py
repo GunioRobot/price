@@ -39,7 +39,7 @@ def trade_last_list(request):
 def profile(request):
     goods_top = Trade.objects.values('goods__id','goods__title').annotate(goods_count=Count('goods')).order_by('-goods_count')[:10]
 
-    sum7 = Trade.objects.filter(user=request.user).filter(spytrade=False).filter(time__gte=datetime.datetime.now()-datetime.timedelta(days=30)).aggregate(Sum('cost'))
+    sum7 = Trade.objects.filter(user=request.user).filter(spytrade=False).filter(time__gte=datetime.datetime.now()-datetime.timedelta(days=7)).aggregate(Sum('cost'))
     sum30 = Trade.objects.filter(user=request.user).filter(spytrade=False).filter(time__gte=datetime.datetime.now()-datetime.timedelta(days=30)).aggregate(Sum('cost'))
 
     trade_list = Trade.objects.filter(user=request.user).order_by('-time')#[:10]
