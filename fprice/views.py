@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 from models import Trade, TradeForm, Shop, Goods, GClass, GSection
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
+from django.db.models import Count, Sum
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
 import simplejson
@@ -38,6 +38,10 @@ def trade_last_list(request):
 
 def profile(request):
     goods_top = Trade.objects.values('goods__id','goods__title').annotate(goods_count=Count('goods')).order_by('-goods_count')[:10]
+
+    sum7 = Trade.objects.filter(user=request.user).filter(spytrade=False).filter(time__gte=datetime.datetime.now()-datetime.timedelta(days=30)).aggregate(Sum('cost'))
+    sum30 = Trade.objects.filter(user=request.user).filter(spytrade=False).filter(time__gte=datetime.datetime.now()-datetime.timedelta(days=30)).aggregate(Sum('cost'))
+
     trade_list = Trade.objects.filter(user=request.user).order_by('-time')#[:10]
 
     paginator = Paginator(trade_list, 25)
@@ -53,7 +57,7 @@ def profile(request):
         trades = paginator.page(paginator.num_pages)
 
     return render_to_response('trade_last.html',
-        {'trade_list': trades, 'goods_top': goods_top},
+        {'trade_list': trades, 'goods_top': goods_top, 'sum7': sum7, 'sum30': sum30},
         context_instance=RequestContext(request))
 
 

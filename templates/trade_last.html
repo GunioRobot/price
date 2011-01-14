@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}<b>последние добавления:</b>{% endblock %}
-
 {% block left %}
 
 {% if goods_top %}
-<b>популярные продукты:</b>
+<b>популярные товары:</b>
 <table width=100%>
 {% for goods in goods_top %}
 <tr>
@@ -19,6 +17,14 @@
 {% endblock %}
 
 {% block content %}
+
+{% if sum7 %}
+<p><b>сумма покупок за неделю: </b>{{ sum7.cost__sum }}
+<p><b>сумма покупок за месяц: </b>{{ sum30.cost__sum }}
+<b>ваши последние добавления:</b>
+{% else %}
+<b>последние добавления:</b>
+{% endif %}
 
 <table width=100%>
 
