@@ -3,14 +3,38 @@
 {% block head %}
 <style type="text/css">
     .smallmap {
-        width: 800px;
-        height: 600px;
+        width: 540px;
+        height: 405px;
         border: 1px solid #ccc;
+    }
+    .licence {
+        position: relative;
+        left: 280px;
+        top: 2px;
+        color: #333333;
+        font-family: Tahoma,Arial,Verdana;
+        font-size: smaller;
+    }
+    div.olControlMousePosition[style] {
+        bottom: 1.5em;
+        display: block;
+        font-family: Arial;
+        font-size: 1em;
+        position: absolute;
+        right: 3px;
+    }
+    .olControlAttribution[style] {
+        bottom: 0em;
+        display: block;
+        font-size: smaller;
+        position: absolute;
+        right: 3px;
     }
 </style>
 
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=true_or_false&amp;key=ABQIAAAAPte4PMXVYF5Xg0EJY9cyBRSiXIua3-NWtWDlIWSdPHqdkOeYghSvfyjFcba9I_NQ2G5fOh3IQf74ag" type="text/javascript"></script>
 <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-<script src="/media/js/openprice.js"></script>
+<script src="/media/js/shop.js"></script>
 {% endblock %}
 
 {% block body_script %}
@@ -22,13 +46,38 @@ onload="init(parseFloat({{ lon_x }}), parseFloat({{ lat_y }}), {{ zoom }}, {{ lo
 {% block content %}
 
 <p>
-    <b>{{ shop.title }}</b>
-    ({{ shop.type.title }}, {{ shop.addr.city }} - {{ shop.addr.street }}, {{ shop.addr.house }})
-<p>Координаты: {{ shop.addr.x }} / {{ shop.addr.y }}
-
+    <table>
+        <tr>
+        	<td> <b>{{ shop.title }}</b> </td>
+        </tr>
+        <tr>
+    		<td>Город</td>
+            <td >
+            <input size=30 type="text" id="city" readonly="readonly" value="{{ shop.addr.city }} Йошкар-Ола" />
+            </td>
+    	</tr>
+    	<tr>
+    		<td>Улица</td>
+            <td >
+            <input size=30 type="text" id="street" value="{{ shop.addr.street }} Анциферова" />
+            </td>
+    	</tr>
+        <tr>
+        	<td>Номер дома</td>
+            <td>
+            <input size=30 type="text" id="house_number" value="{{ shop.addr.house }} 4" />
+            </td>
+        </tr>
+    </table>
+<p>Координаты: <span id="xOutput">{{ shop.addr.x }}</span> / <span id="yOutput">{{ shop.addr.y }}</span></p>
+<button id="getAddr" onclick="doLatLongClick();"> 
+    Get address
+</button>
+<button id="saveAddr" onclick=""> 
+    Save address
+</button>
 <div id="map" class="smallmap"></div>
   
-longitude (X) <textarea id="xOutput"></textarea> <br />
-latitude (Y) <textarea id="yOutput"></textarea>
-
+<br />
+<div id="display_name">display_name</div>
 {% endblock %}
