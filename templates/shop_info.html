@@ -53,19 +53,19 @@ onload="init(parseFloat({{ lon_x }}), parseFloat({{ lat_y }}), {{ zoom }}, {{ lo
         <tr>
     		<td>Город</td>
             <td >
-            <input size=30 type="text" id="city" readonly="readonly" value="{{ shop.addr.city }} Йошкар-Ола" />
+            <input size=30 type="text" id="city" readonly="readonly" value="{{ shop.addr.city }}" />
             </td>
     	</tr>
     	<tr>
     		<td>Улица</td>
             <td >
-            <input size=30 type="text" id="street" value="{{ shop.addr.street }} Анциферова" />
+            <input size=30 type="text" id="street" value="{{ shop.addr.street }}" />
             </td>
     	</tr>
         <tr>
         	<td>Номер дома</td>
             <td>
-            <input size=30 type="text" id="house_number" value="{{ shop.addr.house }} 4" />
+            <input size=30 type="text" id="house_number" value="{{ shop.addr.house }}" />
             </td>
         </tr>
     </table>
@@ -79,5 +79,5 @@ onload="init(parseFloat({{ lon_x }}), parseFloat({{ lat_y }}), {{ zoom }}, {{ lo
 <div id="map" class="smallmap"></div>
   
 <br />
-<div id="display_name">display_name</div>
+<div id="display_name"></div>
 {% endblock %}
