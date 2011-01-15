@@ -96,7 +96,7 @@ class GSection(models.Model):
         ordering = ["title"]
 
 
-class GClass(models.Model):
+"""Class GClass(models.Model):
     title = models.CharField(max_length=50)
     section = models.ForeignKey(GSection)
 
@@ -105,6 +105,7 @@ class GClass(models.Model):
 
     class Meta:
         ordering = ["title"]
+"""
 
 
 ED_CHOICES = (
@@ -121,9 +122,10 @@ class Goods(models.Model):
         ('ode','одежда'),
         ('med','медицина'),
     )
-    gclass = models.ForeignKey(GClass, null=True, blank=True)
+    #gclass = models.ForeignKey(GClass, null=True, blank=True)
     title = models.CharField(max_length=100)
-    type = models.CharField(max_length=3,choices=GOODS_CHOICES, null=True, blank=True)
+    gsection = models.ForeignKey(GSection, null=True, blank=True)
+    #type = models.CharField(max_length=3,choices=GOODS_CHOICES, null=True, blank=True)
     descr = models.TextField(null=True, blank=True)
     ed = models.CharField(max_length=5,choices=ED_CHOICES)
 

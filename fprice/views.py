@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 
-from models import Trade, TradeForm, Shop, Goods, GClass, GSection
+from models import Trade, TradeForm, Shop, Goods, GSection
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Sum
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
@@ -229,20 +229,6 @@ def shop_title_lookup(request):
             # Ignore queries shorter than length 2
             if len(value) > 1:
                 model_results = Shop.objects.filter(title__icontains=value)
-                results = [ (x.__unicode__(), x.id) for x in model_results ]
-    json = simplejson.dumps(results)
-
-    return HttpResponse(json, mimetype='application/json')
-
-
-def gclass_title_lookup(request):
-    results = []
-    if request.method == "GET":
-        if request.GET.has_key(u'q'):
-            value = request.GET[u'q']
-            # Ignore queries shorter than length 2
-            if len(value) > 1:
-                model_results = GClass.objects.filter(title__icontains=value)
                 results = [ (x.__unicode__(), x.id) for x in model_results ]
     json = simplejson.dumps(results)
 
