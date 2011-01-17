@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
-{% if sum7 %}
 {% block breadcrumbs %}
-Профиль <b>{{ request.user }}</b>
-{% endblock %}
+{% if sum7 %}
+Профиль <b>{{ user }}</b>
+{% else %}
+{{ block.super }}
 {% endif %}
+{% endblock %}
 
 {% block left %}
 
