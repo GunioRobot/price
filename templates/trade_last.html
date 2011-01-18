@@ -27,11 +27,18 @@
 {% block content %}
 
 {% if sum7 %}
-<p><b>сумма покупок за неделю: </b>{{ sum7.cost__sum }}
-<p><b>сумма покупок за месяц: </b>{{ sum30.cost__sum }}
-<p><b>ваши последние добавления:</b>
-{% else %}
-<p><b>последние добавления:</b>
+    <p><b>сумма покупок за неделю: </b>{{ sum7.cost__sum }}
+    <p><b>сумма покупок за месяц: </b>{{ sum30.cost__sum }}
+    <p><b>ваши последние добавления:</b>
+{% endif %}
+{% if query %}
+    <p>поиск по <b>{{ query }}</b>
+    {% for res in search %}
+         <p><a href="/goods/{{ res.id }}">{{ res.title }}</a>
+    {% endfor %}
+{% endif %}
+{% if not sum7 and not query %}
+    <p><b>последние добавления:</b>
 {% endif %}
 
 <table width=100%>

@@ -158,6 +158,18 @@ def trade_add(request):
         context_instance=RequestContext(request))
 
 
+def search(request):
+    query = request.GET.get('q', '')
+    if query:
+        results = Goods.objects.filter(title__icontains=query).distinct()
+    else:
+        results = []
+    return render_to_response("trade_last.html",
+        {"search": results, "query": query},
+        context_instance=RequestContext(request)
+    )
+
+
 def trade_view(request, trade_id):
     trade = Trade.objects.get(pk=trade_id)
 
