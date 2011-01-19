@@ -96,7 +96,7 @@ INSTALLED_APPS = (
     'django.contrib.markup',
     'registration',
     'south',
-    'fprice',
+    #'fprice',
     'address',
     'shop',
     'price',
