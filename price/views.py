@@ -18,18 +18,18 @@ from shop.models import Shop
 
 def trade_list(request):
     trade_lists = Trade.objects.all()
-    return object_list(request, queryset=trade_lists)
+    return object_list(request, queryset=trade_lists, paginate_by=25)
 
 
 def trade_by_goods(request, goods_id):
     trade_list = Trade.objects.filter(goods__id=goods_id)
-    return object_list(request, queryset=trade_list)
+    return object_list(request, queryset=trade_list, paginate_by=25)
 
 
 @login_required
 def trade_by_user(request):
     trade_list = Trade.objects.filter(user=request.user)
-    return object_list(request, queryset=trade_list)
+	    return object_list(request, queryset=trade_list, paginate_by=25)
 
 
 @login_required
