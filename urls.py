@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     (r'^shop/(?P<shop_id>\d+)', 'shop.views.shop_info'),
     (r'^accounts/', include('registration.urls')),
     (r'^accounts/profile/', 'price.views.trade_by_user'),
+    (r'^search/$', 'price.views.search'),
     url(r'^lookup/(shop|goods)', 'price.views.lookup', name='json_lookup'),
 
     # Uncomment the admin/doc line below to enable admin documentation:

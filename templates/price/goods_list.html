@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<table>
+
+{% for goods1 in object_list %}
+<tr>
+<td><a href="/goods/{{ goods1.id }}">{{ goods1.title }}</a></td>
+</tr>
+{% endfor %}
+
+</table>
+
+<span>
+    {% if is_paginated %}
+
+        {% if has_previous %}
+            <a href="?page={{ previous }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            {{ page }}/{{ pages }}
+        </span>
+
+        {% if has_next %}
+            <a href="?page={{ next }}">next</a>
+        {% endif %}
+
+    {% endif %}
+</span>
+
+
+{% endblock %}

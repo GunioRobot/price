@@ -32,6 +32,15 @@ def trade_by_user(request):
     return object_list(request, queryset=trade_list, paginate_by=25)
 
 
+def search(request):
+    query = request.GET.get('q', '')
+    if query:
+        results = Goods.objects.filter(title__icontains=query).distinct()
+    else:
+        results = []
+    return object_list(request, queryset=results, paginate_by=25)
+
+
 @login_required
 def trade_add(request):
     price1 = 0
