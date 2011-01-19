@@ -23,7 +23,7 @@ def trade_list(request):
 
 def trade_by_goods(request, goods_id):
     trade_list = Trade.objects.filter(goods__id=goods_id)
-    return object_list(request, queryset=trade_list, paginate_by=25)
+    return object_list(request, queryset=trade_list, paginate_by=25, extra_context={'goods1':Goods.objects.get(id=goods_id)})
 
 
 @login_required

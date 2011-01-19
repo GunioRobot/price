@@ -1,5 +1,19 @@
 {% extends "base.html" %}
 
+{% block breadcrumbs %}
+
+{% if is_profile %}
+    Профиль <b>{{ user }}</b>
+{% endif %}
+{% if goods1 %}
+    Продукт <b>{{ goods1.title }}</b>
+{% endif %}
+{% if not is_profile and not goods1 %}
+    {{ block.super }}
+{% endif %}
+
+{% endblock %}
+
 {% block content %}
 
 <table>
