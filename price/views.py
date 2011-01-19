@@ -29,7 +29,7 @@ def trade_by_goods(request, goods_id):
 @login_required
 def trade_by_user(request):
     trade_list = Trade.objects.filter(user=request.user)
-	    return object_list(request, queryset=trade_list, paginate_by=25)
+    return object_list(request, queryset=trade_list, paginate_by=25)
 
 
 @login_required
