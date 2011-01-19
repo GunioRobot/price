@@ -48,7 +48,7 @@
         padding: 3px;
         margin: 0px 0px 10px 0px;
         background: #ddd;
-        float: left;
+        float: right;
         width: 240px;
         text-align: left;
     }
@@ -57,7 +57,7 @@
         padding: 3px;
         margin: 0px 0px 10px 0px;
         background: #ddd;
-        float: right;
+        float: left;
         width: 544px;
         text-align: justify;
     }
@@ -91,15 +91,11 @@
 
 <div id=menu>
     <a href="/">главная</a> |
-    {% if user.is_authenticated %}
-    <a href="/accounts/profile/">профиль</a> |
+    {% if user.is_authenticated %}<a href="/accounts/profile/">профиль</a> |
     <a href="/trade/add/">добавить</a> |
-    {% if user.is_staff %}
-    <a href="/admin/">админка</a> |
-    {% endif %}
-    <a href="{% url auth_logout %}">выйти</a> ({{ user.username }})
-    {% else %}
-    <a href="{% url auth_login %}">войти</a>
+    {% if user.is_staff %}<a href="/admin/">админка</a> |
+    {% endif %}<a href="{% url auth_logout %}">выйти</a> ({{ user.username }})
+    {% else %}<a href="{% url auth_login %}">войти</a>
     {% endif %}
 </div>
 
@@ -108,7 +104,6 @@
     {% block breadcrumbs %}
     Главная
     {% endblock %}
-<span style="padding:0px; margin:-6px; spacing:0px; float:right; text-align:right; font-size:8px;"><form action="/search/" method="GET"><input style="margin:0px; padding:0px; width:100px; height:1.1em" type="text" name="q"><input style="height:25px; margin:0px; padding:0px;" type="submit" value="Поиск"></form></span>
 </div>
 
 <div id=left>
@@ -118,9 +113,6 @@
 </div>
 
 <div id=content>
-    {% block title %}
-
-    {% endblock %}
     {% block content %}
 
     {% endblock %}

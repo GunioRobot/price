@@ -146,7 +146,7 @@ CURR_CHOICES = (
 )
 
 class Trade(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='user')
     shop = models.ForeignKey(Shop)
     goods = models.ForeignKey(Goods)
     time = models.DateTimeField(default=datetime.now) #(auto_now_add=True)

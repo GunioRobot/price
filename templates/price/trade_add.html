@@ -4,7 +4,7 @@
 
 <script>
     $(function() {
-        $('#id_shop').autocomplete('{% url shop_lookup %}', {
+        $('#id_shop').autocomplete('/lookup/shop/', {
             dataType: 'json',
             width: 500,
             parse: function(data) {
@@ -23,7 +23,7 @@
 
 <script>
     $(function() {
-        $('#id_gtitle').autocomplete('{% url gtitle_lookup %}', {
+        $('#id_gtitle').autocomplete('/lookup/goods/', {
             dataType: 'json',
             width: 500,
 	    extraParams: {

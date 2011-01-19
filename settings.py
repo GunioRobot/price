@@ -97,6 +97,9 @@ INSTALLED_APPS = (
     'registration',
     'south',
     'fprice',
+    'address',
+    'shop',
+    'price',
 )
 
 # DATABASE SETTINGS
