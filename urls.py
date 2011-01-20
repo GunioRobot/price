@@ -21,7 +21,7 @@ urlpatterns = patterns('',
     # Profile
     (r'^accounts/', include('registration.urls')),
     url(r'^profile/$', 'price.views.trade_by_user', name='user_profile'),
-    url(r'^profile/(?P<year>\d{4})/(?P<month>\w{3})/$', 'price.views.trade_by_user_month', name='user_month'),
+    url(r'^profile/(?P<year>\d{4})/(?P<month>\d{2})/$', 'price.views.trade_by_user_month', name='user_month'),
 
     # AJAX
     url(r'^lookup/(shop|goods)/$', 'price.views.lookup', name='json_lookup'),

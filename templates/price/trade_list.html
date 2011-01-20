@@ -6,7 +6,7 @@
     Профиль <b>{{ user }}</b>
 {% endif %}
 {% if is_profile_month %}
-    <a href="{% url user_profile %}">Профить <b>{{ user }}</b></a> - Месяц
+    <a href="{% url user_profile %}">Профиль <b>{{ user }}</b></a> - Месяц
 {% endif %}
 {% if goods1 %}
     Продукт <b>{{ goods1.title }}</b>
@@ -21,8 +21,9 @@
 {% block left %}
 {% if is_profile or is_profile_month %}
 <p style="margin:0"><b>За месяц</b>
-<br><a href="{% url user_month 2011 'jan' %}">2011/01</a>
-<br><a href="{% url user_month 2010 'dec' %}">2010/12</a>
+{% for month1 in month_set %}
+    <br><a href="{% url user_month month1.year month1|date:'m' %}">{{ month1.year }}.{{ month1|date:'m' }}</a>
+{% endfor %}
 {% endif %}
 {% endblock %}
 

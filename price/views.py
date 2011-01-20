@@ -29,16 +29,18 @@ def trade_by_goods(request, goods_id):
 @login_required
 def trade_by_user(request):
     trade_list = Trade.objects.filter(user=request.user)
-    return object_list(request, queryset=trade_list, paginate_by=25, extra_context={'is_profile':True})
+    trade_month = Trade.objects.filter(user=request.user).dates('time','month',order='DESC')
+    return object_list(request, queryset=trade_list, paginate_by=25, extra_context={'is_profile':True, 'month_set':trade_month})
 
 
 @login_required
 def trade_by_user_month(request, year, month):
     # Convert date to numeric format
-    date = datetime.date(*time.strptime('%s-%s' % (year, month), '%Y-%b')[:3])
-    trade_list = Trade.objects.filter(user=request.user, time__year=date.year, time__month=date.month).order_by('-time')
-    # trade_month = Trade.objects.filter(user=request.user).dates('time','month')
-    return object_list(request, queryset=trade_list, paginate_by=25, extra_context={'is_profile_month':True})
+    #date = datetime.date(*time.strptime('%s-%s' % (year, month), '%Y-%m')[:3])
+    #trade_list = Trade.objects.filter(user=request.user, time__year=date.year, time__month=date.month).order_by('-time')
+    trade_list = Trade.objects.filter(user=request.user, time__year=year, time__month=month)
+    trade_month = Trade.objects.filter(user=request.user).dates('time','month',order='DESC')
+    return object_list(request, queryset=trade_list, paginate_by=25, extra_context={'is_profile_month':True, 'month_set':trade_month})
 
 
 def search(request):
@@ -99,7 +101,7 @@ def trade_add(request):
 
             trade1.save()
 
-            return HttpResponseRedirect("/") #('/thanks/')  # Redirect after POST
+            return HttpResponseRedirect("/profile/") #('/thanks/')  # Redirect after POST
 
     else:
         data = {'time': datetime.datetime.now, 'trade_pk': '0', 'shop_pk': '0', 'gtitle_pk': '0' }
