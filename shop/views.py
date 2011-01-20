@@ -4,13 +4,26 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic.list_detail import object_list
+from django.db.models import Count
 
 from shop.models import Shop
+from price.models import Trade
 
 import httplib
 import re
 from xml.dom.minidom import parseString
 
+def trade_by_shop(request, shop_id):
+    
+    goods_top = Trade.objects.filter(shop=shop_id).values('goods__id','goods__title').annotate(goods_count=Count('goods')).order_by('-goods_count')[:10]
+    
+    trade_list = Trade.objects.filter(shop=shop_id)
+    
+    return render_to_response('shop/shop_detail.html',{"trade_list": trade_list,"shop":Shop.objects.get(pk=shop_id),"goods_top":goods_top})
+    # return object_list(request, queryset=shop_detail)
+
+"""
 def shop_info(request, shop_id):
     shop = Shop.objects.get(pk=shop_id)
     lon_x = 0
@@ -52,3 +65,4 @@ def shop_info(request, shop_id):
     return render_to_response('shop/shop_detail.html',
         {'shop': shop, 'lat_y': lat_y, 'lon_x': lon_x, 'zoom': zoom, 'location': location},
         context_instance=RequestContext(request))
+"""
