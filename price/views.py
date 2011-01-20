@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Sum
 
 import simplejson
-import datetime
+import datetime, time
 
 from price.models import Trade, TradeForm, Goods, Section
 from shop.models import Shop
@@ -30,6 +30,15 @@ def trade_by_goods(request, goods_id):
 def trade_by_user(request):
     trade_list = Trade.objects.filter(user=request.user)
     return object_list(request, queryset=trade_list, paginate_by=25, extra_context={'is_profile':True})
+
+
+@login_required
+def trade_by_user_month(request, year, month):
+    # Convert date to numeric format
+    date = datetime.date(*time.strptime('%s-%s' % (year, month), '%Y-%b')[:3])
+    trade_list = Trade.objects.filter(user=request.user, time__year=date.year, time__month=date.month).order_by('-time')
+    # trade_month = Trade.objects.filter(user=request.user).dates('time','month')
+    return object_list(request, queryset=trade_list, paginate_by=25, extra_context={'is_profile_month':True})
 
 
 def search(request):

@@ -5,14 +5,27 @@
 {% if is_profile %}
     Профиль <b>{{ user }}</b>
 {% endif %}
+{% if is_profile_month %}
+    <a href="{% url user_profile %}">Профить <b>{{ user }}</b></a> - Месяц
+{% endif %}
 {% if goods1 %}
     Продукт <b>{{ goods1.title }}</b>
 {% endif %}
-{% if not is_profile and not goods1 %}
+{% if not is_profile_month and not is_profile and not goods1 %}
     {{ block.super }}
 {% endif %}
 
 {% endblock %}
+
+
+{% block left %}
+{% if is_profile or is_profile_month %}
+<p style="margin:0"><b>За месяц</b>
+<br><a href="{% url user_month 2011 'jan' %}">2011/01</a>
+<br><a href="{% url user_month 2010 'dec' %}">2010/12</a>
+{% endif %}
+{% endblock %}
+
 
 {% block content %}
 
@@ -30,10 +43,13 @@ $(document).ready(function() {
 {% if is_profile %}
     <h1>Ваши последние добавления</h1>
 {% endif %}
+{% if is_profile_month %}
+    <h1>Ваши последния добавления за месяц</h1>
+{% endif %}
 {% if goods1 %}
     <h1>Цены на продукт</h1> <span style="margin: 2px auto 10px; font-size:14px;" class="edit" id="{{ goods1.id }}">{{ goods1.title }}</span>
 {% endif %}
-{% if not is_profile and not goods1 %}
+{% if not is_profile_month and not is_profile and not goods1 %}
     <h1>Последние обновления цен</h1>
 {% endif %}
 

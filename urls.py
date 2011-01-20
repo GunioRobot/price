@@ -10,15 +10,22 @@ admin.autodiscover()
 urlpatterns = patterns('',
 
     (r'^$', 'price.views.trade_list' ),
-    (r'^trade/add/', 'price.views.trade_add'),
+    (r'^trade/add/$', 'price.views.trade_add'),
     (r'^trade/(?P<trade_id>\d+)', 'price.views.trade_view'),
+
     (r'^goods/(?P<goods_id>\d+)', 'price.views.trade_by_goods' ),
     (r'^shop/(?P<shop_id>\d+)', 'shop.views.trade_by_shop'),
-    (r'^accounts/', include('registration.urls')),
-    url(r'^profile/', 'price.views.trade_by_user', name='user_profile'),
+
     (r'^search/$', 'price.views.search'),
-    url(r'^lookup/(shop|goods)', 'price.views.lookup', name='json_lookup'),
-    url(r'^edit/goods/', 'price.views.edit_goods', name='edit_goods'),
+
+    # Profile
+    (r'^accounts/', include('registration.urls')),
+    url(r'^profile/$', 'price.views.trade_by_user', name='user_profile'),
+    url(r'^profile/(?P<year>\d{4})/(?P<month>\w{3})/$', 'price.views.trade_by_user_month', name='user_month'),
+
+    # AJAX
+    url(r'^lookup/(shop|goods)/$', 'price.views.lookup', name='json_lookup'),
+    url(r'^edit/goods/$', 'price.views.edit_goods', name='edit_goods'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
