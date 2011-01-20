@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block breadcrumbs %}
-Новая покупка/цена
+Новая цена/покупка
 {% endblock %}
 
 {% block content %}
@@ -48,7 +48,7 @@
     });
 </script>
 
-<h1>Добавить новую цену/покупку</h1>
+<h1>Добавление новой цены/покупки</h1>
 
 <form action="/trade/add/" method="post">{% csrf_token %}
 <table>

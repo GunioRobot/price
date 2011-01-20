@@ -134,4 +134,15 @@ def lookup(request, what):
 
     return HttpResponse(json, mimetype='application/json')
 
-    
+
+@login_required
+def edit_goods(request):
+    value = ''
+    if request.user.is_staff and request.method == "POST":
+        if request.POST.has_key(u'value') and request.POST.has_key(u'id'):
+            value = request.POST[u'value']
+            goods_id = request.POST[u'id']
+            goods1 = Goods.objects.get(id=goods_id)
+            goods1.title = value
+            goods1.save()
+    return HttpResponse(value)

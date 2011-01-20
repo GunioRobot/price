@@ -16,17 +16,28 @@
 
 {% block content %}
 
+{% if user.is_staff %}<script type="text/javascript">
+$(document).ready(function() {
+     $('.edit').editable('/edit/goods/', {
+         indicator : 'Сохранение...',
+         tooltip   : 'Нажмите для изменения...',
+         cancel    : 'Отмена',
+         submit    : 'OK',
+     });
+});
+</script>{% endif %}
+
 {% if is_profile %}
     <h1>Ваши последние добавления</h1>
 {% endif %}
 {% if goods1 %}
-    <h1>Последние цены для продукта: {{ goods1.title }}</h1>
+    <h1>Цены на продукт</h1> <span style="margin: 2px auto 10px; font-size:14px;" class="edit" id="{{ goods1.id }}">{{ goods1.title }}</span>
 {% endif %}
 {% if not is_profile and not goods1 %}
     <h1>Последние обновления цен</h1>
 {% endif %}
 
-<table>
+<table style="margin: 5px 0 0px;">
 
 {% for trade in object_list %}
 <tr>
@@ -38,7 +49,7 @@
 {% else %}{{ trade.price }}
 {% endif %}</td>
 <td>{{ trade.get_currency_display }}/{{ trade.goods.get_ed_display }}</td>
-<td><a href="/goods/{{ trade.goods.id }}">{{ trade.goods.title }}</a></td>
+{% if not goods1 %}<td><a href="/goods/{{ trade.goods.id }}">{{ trade.goods.title }}</a></td>{% endif %}
 </tr>
 {% endfor %}
 

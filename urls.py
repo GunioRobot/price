@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^profile/', 'price.views.trade_by_user', name='user_profile'),
     (r'^search/$', 'price.views.search'),
     url(r'^lookup/(shop|goods)', 'price.views.lookup', name='json_lookup'),
+    url(r'^edit/goods/', 'price.views.edit_goods', name='edit_goods'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
