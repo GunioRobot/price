@@ -16,6 +16,16 @@
 
 {% block content %}
 
+{% if is_profile %}
+    <h1>Ваши последние добавления</h1>
+{% endif %}
+{% if goods1 %}
+    <h1>Последние цены для продукта: {{ goods1.title }}</h1>
+{% endif %}
+{% if not is_profile and not goods1 %}
+    <h1>Последние обновления цен</h1>
+{% endif %}
+
 <table>
 
 {% for trade in object_list %}

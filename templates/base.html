@@ -7,7 +7,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 <script type="text/javascript" src="/media/js/jquery.min.js"></script>
-
 <script type="text/javascript" src="/media/js/jquery.bgiframe.min.js"></script>
 <script type="text/javascript" src="/media/js/jquery.autocomplete.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/media/js/jquery.autocomplete.css" />
@@ -30,7 +29,7 @@
     }
 
     #header {
-
+        margin:0 auto 5px;
     }
 
     #menu {
@@ -76,6 +75,11 @@
         color: #a52919;
         text-decoration: none;
     }
+
+    h1 {
+        font-size: 14px;
+        margin: 4px auto 4px;
+    }
 </style>
 
 {% block head %}{% endblock %}
@@ -86,7 +90,7 @@
 <div id=container>
 
 <div id=header>
-    <h1><img src="/media/price.png">PriceSpeak</h1>
+    <span style="font-size:22px; font-weight:bold; margin-bottom:15px;"><img src="/media/price.png">PriceSpeak</span>
 </div>
 
 <div id=menu>
