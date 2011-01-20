@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     (r'^goods/(?P<goods_id>\d+)', 'price.views.trade_by_goods' ),
     (r'^shop/(?P<shop_id>\d+)', 'shop.views.shop_info'),
     (r'^accounts/', include('registration.urls')),
-    (r'^accounts/profile/', 'price.views.trade_by_user'),
+    url(r'^profile/', 'price.views.trade_by_user', name='user_profile'),
     (r'^search/$', 'price.views.search'),
     url(r'^lookup/(shop|goods)', 'price.views.lookup', name='json_lookup'),
 

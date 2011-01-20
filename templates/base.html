@@ -95,7 +95,7 @@
 
 <div id=menu>
     <a href="/">главная</a> |
-    {% if user.is_authenticated %}<a href="/accounts/profile/">профиль</a> |
+    {% if user.is_authenticated %}<a href="{% url user_profile %}">профиль</a> |
     <a href="/trade/add/">добавить</a> |
     {% if user.is_staff %}<a href="/admin/">админка</a> |
     {% endif %}<a href="{% url auth_logout %}">выйти</a> ({{ user.username }})
