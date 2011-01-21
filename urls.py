@@ -14,7 +14,8 @@ urlpatterns = patterns('',
     (r'^trade/(?P<trade_id>\d+)', 'price.views.trade_view'),
 
     (r'^goods/(?P<goods_id>\d+)', 'price.views.trade_by_goods' ),
-    (r'^shop/(?P<shop_id>\d+)', 'shop.views.trade_by_shop'),
+    (r'^shop/(?P<shop_id>\d+)/$', 'shop.views.trade_by_shop'),
+    (r'^shop/(?P<shop_id>\d+)/goods/(?P<goods_id>\d+)', 'shop.views.goods_by_shop'),
 
     (r'^search/$', 'price.views.search'),
 

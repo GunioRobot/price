@@ -1,4 +1,14 @@
 {% extends "base.html" %}
+{% load shop_extras %}
+
+{% block head %}
+<script language="javascript" type="text/javascript" src="/media/js/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="/media/js/jquery.flot.pack.js"></script>
+{% endblock %}
+
+{% block body_script %}
+onload="onLoad();" onresize="onResize();"
+{% endblock %}
 
 {% block breadcrumbs %}
 
@@ -23,8 +33,27 @@
 <td><a href="/goods/{{ trade.goods.id }}">{{ trade.goods.title }}</a></td>
 </tr>
 {% endfor %}
-
 </table>
+
+{% if goods_id %}
+<script type="text/javascript">
+$(function () {
+//    var d1 = [[1,25],[2,26]];
+    
+//    for (var i = 0; i < {{ trade_list.count }}; i += 1)
+//        d1.push([i, {{ trade_list }});
+    var i = 1;
+    var d1 = [
+    {% for trade in trade_list %}
+    [{{ trade.time|epoch }},{{ trade.price }}],
+    {% endfor %}
+    ];
+    $.plot($("#placeholder"), [d1,]);
+});
+</script>
+
+<div id="placeholder" style="width:100%;height:300px;"></div>
+{% endif %}
 
 {% endblock %}
 
@@ -33,7 +62,7 @@
     {% for goods in goods_top %}
     <tr>
     <td>{{ goods.goods_count }}x</td>
-    <td><a href="/goods/{{ goods.goods__id }}">{{ goods.goods__title }}</a></td>
+    <td><a href="/shop/{{ shop.id }}/goods/{{ goods.goods__id }}">{{ goods.goods__title }}</a></td>
     </tr>
     {% endfor %}
     </table>

@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic.list_detail import object_list
 from django.db.models import Count
+from django.db.models import Q
 
 from shop.models import Shop
 from price.models import Trade
@@ -20,7 +21,16 @@ def trade_by_shop(request, shop_id):
     
     trade_list = Trade.objects.filter(shop=shop_id)
     
-    return render_to_response('shop/shop_detail.html',{"trade_list": trade_list,"shop":Shop.objects.get(pk=shop_id),"goods_top":goods_top})
+    return render_to_response('shop/shop_detail.html',{"trade_list": trade_list,"shop":Shop.objects.get(pk=shop_id),"goods_top":goods_top},context_instance=RequestContext(request))
+    # return object_list(request, queryset=shop_detail)
+
+def goods_by_shop(request, shop_id, goods_id):
+    
+    goods_top = Trade.objects.filter(shop=shop_id).values('goods__id','goods__title').annotate(goods_count=Count('goods')).order_by('-goods_count')[:10]
+    
+    trade_list = Trade.objects.filter(Q(shop=shop_id) & Q(goods=goods_id))
+    
+    return render_to_response('shop/shop_detail.html',{"trade_list": trade_list,"shop":Shop.objects.get(pk=shop_id),"goods_top":goods_top,"goods_id": goods_id},context_instance=RequestContext(request))
     # return object_list(request, queryset=shop_detail)
 
 """
