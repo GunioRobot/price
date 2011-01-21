@@ -69,7 +69,7 @@ $(document).ready(function() {
 {% else %}{{ trade.price }}
 {% endif %}</td>
 <td>{{ trade.get_currency_display }}/{{ trade.goods.get_ed_display }}</td>
-{% if is_profile or is_profile_month %}<td>x{{ trade.amount }}</td><td><b>{{ trade.cost }}</b></td>{% endif %}
+{% if is_profile or is_profile_month %}{% if trade.spytrade %}<td></td><td></td>{% endif %}{% if not trade.spytrade %}<td>x{{ trade.amount }}</td><td><b>{{ trade.cost }}</b></td>{% endif %}{% endif %}
 {% if not goods1 %}<td><a href="/goods/{{ trade.goods.id }}">{{ trade.goods.title }}</a></td>{% endif %}
 </tr>
 {% endfor %}
