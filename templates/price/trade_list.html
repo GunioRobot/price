@@ -45,7 +45,7 @@ $(document).ready(function() {
     <h1>Ваши последние добавления</h1>
 {% endif %}
 {% if is_profile_month %}
-    <h1>Ваши последния добавления за месяц</h1>
+    <h1>Ваши последния добавления за месяц {{ year }}</h1>
 {% endif %}
 {% if goods1 %}
     <h1>Цены на продукт</h1> <span style="margin: 2px auto 10px; font-size:14px;" class="edit" id="{{ goods1.id }}">{{ goods1.title }}</span>
@@ -54,6 +54,9 @@ $(document).ready(function() {
     <h1>Последние обновления цен</h1>
 {% endif %}
 
+{% if is_profile %}<p style="margin: 7px 0 5px">сумма за 30 последних дней: <b>{{ cost30.cost_sum }}</b>{% endif %}
+{% if is_profile_month %}<p style="margin: 7px 0 5px">на сумму: <b>{{ month_cost.cost_sum }}</b>{% endif %}
+
 <table style="margin: 5px 0 0px;">
 
 {% for trade in object_list %}
@@ -61,11 +64,12 @@ $(document).ready(function() {
 <td><i>{# trade.user #}{{ trade.time|date:"j b" }}</i></td>
 <td><a href="/shop/{{ trade.shop.id }}" title="{{ trade.shop.addr.city }}, {{ trade.shop.addr.street }}, {{ trade.shop.title }}">маг</a></td>
 <td style="text-align:right">
-{% if is_profile and trade.spytrade %}<img src="/media/eye.png"> {% endif %}
+{% if is_profile or is_profile_month %}{% if trade.spytrade %}<img src="/media/eye.png"> {% endif %}{% endif %}
 {% if trade.user = user %}<a href="/trade/{{ trade.id }}">{{ trade.price }}</a> 
 {% else %}{{ trade.price }}
 {% endif %}</td>
 <td>{{ trade.get_currency_display }}/{{ trade.goods.get_ed_display }}</td>
+{% if is_profile or is_profile_month %}<td>x{{ trade.amount }}</td><td><b>{{ trade.cost }}</b></td>{% endif %}
 {% if not goods1 %}<td><a href="/goods/{{ trade.goods.id }}">{{ trade.goods.title }}</a></td>{% endif %}
 </tr>
 {% endfor %}

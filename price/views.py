@@ -30,7 +30,8 @@ def trade_by_goods(request, goods_id):
 def trade_by_user(request):
     trade_list = Trade.objects.filter(user=request.user)
     trade_month = Trade.objects.filter(user=request.user).dates('time','month',order='DESC')
-    return object_list(request, queryset=trade_list, paginate_by=25, extra_context={'is_profile':True, 'month_set':trade_month})
+    cost30 = Trade.objects.filter(user=request.user).filter(spytrade=False).filter(time__gte=datetime.datetime.now()-datetime.timedelta(days=30)).aggregate(cost_sum=Sum('cost'))
+    return object_list(request, queryset=trade_list, paginate_by=25, extra_context={'is_profile':True, 'month_set':trade_month, 'cost30':cost30})
 
 
 @login_required
@@ -40,7 +41,9 @@ def trade_by_user_month(request, year, month):
     #trade_list = Trade.objects.filter(user=request.user, time__year=date.year, time__month=date.month).order_by('-time')
     trade_list = Trade.objects.filter(user=request.user, time__year=year, time__month=month)
     trade_month = Trade.objects.filter(user=request.user).dates('time','month',order='DESC')
-    return object_list(request, queryset=trade_list, paginate_by=25, extra_context={'is_profile_month':True, 'month_set':trade_month})
+    cost_month = Trade.objects.filter(user=request.user).filter(spytrade=False).filter(time__year=year,time__month=month).aggregate(cost_sum=Sum('cost'))
+    #,time__gte=datetime.datetime.now()-datetime.timedelta(days=30)
+    return object_list(request, queryset=trade_list, paginate_by=25, extra_context={'is_profile_month':True, 'month_set':trade_month, 'month_cost':cost_month})
 
 
 def search(request):
