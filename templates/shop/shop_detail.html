@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load shop_extras %}
 
 {% block head %}
 <script language="javascript" type="text/javascript" src="/media/js/jquery.js"></script>
@@ -20,6 +19,34 @@ onload="onLoad();" onresize="onResize();"
 
 <h1 style="font-weight:normal">Цены магазина: <b>{{ shop.title }}</b>, {{ shop.addr.city }}, {{ shop.addr.street }}, {{ shop.addr.house }}</h1>
 
+{% if goods_id %}
+{% load shop_extras %}
+<script type="text/javascript">
+$(function () {
+//    var d1 = [[1,25],[2,26]];
+
+    var i = 1;
+    var d1 = [
+    {% for trade in trade_list %}
+    [{{ trade.time|epoch }},{{ trade.price }}],
+    {% endfor %}
+    ];
+    $.plot($("#price_chart"), [d1,], {
+        lines: { show: true },
+        points: { show: true },
+        yaxis: {
+            tickDecimals: 2},
+        xaxis: {
+            minTickSize: [1, "day"],
+            mode: "time",
+            timeformat: "%y/%m/%d"},
+    });
+});
+</script>
+
+<div id="price_chart" style="width:100%;height:300px;"></div>
+{% endif %}
+
 <table>
 {% for trade in trade_list %}
 <tr>
@@ -34,35 +61,6 @@ onload="onLoad();" onresize="onResize();"
 </tr>
 {% endfor %}
 </table>
-
-{% if goods_id %}
-<script type="text/javascript">
-$(function () {
-//    var d1 = [[1,25],[2,26]];
-    
-//    for (var i = 0; i < {{ trade_list.count }}; i += 1)
-//        d1.push([i, {{ trade_list }});
-    var i = 1;
-    var d1 = [
-    {% for trade in trade_list %}
-    [{{ trade.time|epoch }},{{ trade.price }}],
-    {% endfor %}
-    ];
-    $.plot($("#placeholder"), [d1,], {
-        lines: { show: true },
-        points: { show: true },
-        yaxis: {
-            tickDecimals: 2},
-        xaxis: {
-            minTickSize: [1, "day"],
-            mode: "time",
-            timeformat: "%y/%m/%d"},
-    });
-});
-</script>
-
-<div id="placeholder" style="width:100%;height:300px;"></div>
-{% endif %}
 
 {% endblock %}
 
