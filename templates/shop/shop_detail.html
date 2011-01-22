@@ -48,7 +48,16 @@ $(function () {
     [{{ trade.time|epoch }},{{ trade.price }}],
     {% endfor %}
     ];
-    $.plot($("#placeholder"), [d1,]);
+    $.plot($("#placeholder"), [d1,], {
+        lines: { show: true },
+        points: { show: true },
+        yaxis: {
+            tickDecimals: 2},
+        xaxis: {
+            minTickSize: [1, "day"],
+            mode: "time",
+            timeformat: "%y/%m/%d"},
+    });
 });
 </script>
 
