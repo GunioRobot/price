@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block head %}
+<script language="javascript" type="text/javascript" src="/media/js/jquery.flot.pack.js"></script>
+{% endblock %}
+
 {% block breadcrumbs %}
 
 {% if is_profile %}
@@ -56,6 +60,33 @@ $(document).ready(function() {
 
 {% if is_profile %}<p style="margin: 7px 0 5px">сумма за 30 последних дней: <b>{{ cost30.cost_sum }}</b>{% endif %}
 {% if is_profile_month %}<p style="margin: 7px 0 5px">на сумму: <b>{{ month_cost.cost_sum }}</b>{% endif %}
+
+{% if goods1 %}
+{% load shop_extras %}
+<script type="text/javascript">
+$(function () {
+//    var d1 = [[1,25],[2,26]];
+
+    var i = 1;
+    var d1 = [
+    {% for trade in object_list %}
+    [{{ trade.time|epoch }},{{ trade.price }}],
+    {% endfor %}
+    ];
+    $.plot($("#price_chart"), [d1,], {
+        lines: { show: true },
+        points: { show: true },
+        yaxis: {
+            tickDecimals: 2},
+        xaxis: {
+            minTickSize: [1, "day"],
+            mode: "time",
+            timeformat: "%y/%m/%d"},
+    });
+});
+</script>
+<div id="price_chart" style="width:100%;height:300px;"></div>
+{% endif %}
 
 <table style="margin: 5px 0 0px;">
 
