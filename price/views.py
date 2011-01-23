@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, Sum
+from django.db.models import Count, Sum, Q
 
 import simplejson
 import datetime, time
@@ -23,7 +23,8 @@ def trade_list(request):
 
 def trade_by_goods(request, goods_id):
     trade_list = Trade.objects.filter(goods__id=goods_id)
-    return object_list(request, queryset=trade_list, paginate_by=25, extra_context={'goods1':Goods.objects.get(id=goods_id)})
+    shop_list = Shop.objects.filter(pk__in=trade_list.values_list('shop', flat=True).order_by('shop').distinct())
+    return object_list(request, queryset=trade_list, paginate_by=25, extra_context={'goods1':Goods.objects.get(id=goods_id),'shop_list':shop_list})
 
 
 @login_required
