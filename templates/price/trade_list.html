@@ -37,8 +37,8 @@
 $(document).ready(function() {
     var datasets = {
         {% for shop in shop_list %}
-        "{{ shop.title }}": {
-            label: "{{ shop.title }}",
+        "{{ shop.id }}": {
+            label: '{{ shop.title }}<br>({{ shop.addr.city.title }}, {{ shop.addr.street.title }}, {{ shop.addr.house.title }})',
             data: [{% for trade in object_list %}{% ifequal trade.shop shop %}[{{ trade.time|epoch }},{{ trade.price }}],{% endifequal %}{% endfor %}]
         },
         {% endfor %}
@@ -50,10 +50,13 @@ $(document).ready(function() {
         ++i;
     });
     // insert checkboxes
+    var colors = ["#edc240", "#afd8f8", "#cb4b4b", "#4da74d", "#9440ed"];
     var choiceContainer = $("#shop_choices");
     $.each(datasets, function(key, val) {
         choiceContainer.append('<br/><input type="checkbox" name="' + key +
-                               '" checked="checked" >' + val.label + '</input>');
+                               '" checked="checked" >' +
+                               '<div style="float:left;padding:1px;width:14px;height:14px;background-color:' + colors[val.color] + ';overflow:hidden"></div>'
+                               + val.label + '</input>');
     });
     choiceContainer.find("input").click(plotAccordingToChoices);
     
@@ -77,6 +80,7 @@ $(document).ready(function() {
                     mode: "time",
                     timeformat: "%y/%m/%d"},
                 grid: { hoverable: true, clickable: true },
+                legend: { show: false },
             });
     }
 

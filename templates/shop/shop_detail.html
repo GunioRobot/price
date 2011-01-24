@@ -23,15 +23,12 @@ onload="onLoad();" onresize="onResize();"
 {% load shop_extras %}
 <script type="text/javascript">
 $(function () {
-//    var d1 = [[1,25],[2,26]];
-
-    var i = 1;
     var d1 = [
     {% for trade in trade_list %}
     [{{ trade.time|epoch }},{{ trade.price }}],
     {% endfor %}
     ];
-    $.plot($("#price_chart"), [d1,], {
+    $.plot($("#price_chart"), [d1], {
         lines: { show: true },
         points: { show: true },
         yaxis: {
@@ -40,6 +37,45 @@ $(function () {
             minTickSize: [1, "day"],
             mode: "time",
             timeformat: "%y/%m/%d"},
+        grid: { hoverable: true, clickable: true },
+        legend: { show: false },
+    });
+    
+    function showTooltip(x, y, contents) {
+        $('<div id="tooltip">' + contents + '</div>').css( {
+            position: 'absolute',
+            display: 'none',
+            top: y + 5,
+            left: x + 5,
+            border: '1px solid #fdd',
+            padding: '2px',
+            'background-color': '#fee',
+            opacity: 0.80
+        }).appendTo("body").fadeIn(200);
+    };
+    
+    var previousPoint = null;
+    $("#price_chart").bind("plothover", function (event, pos, item) {
+        if (item) {
+            if (previousPoint != item.datapoint) {
+                previousPoint = item.datapoint;
+                
+                $("#tooltip").remove();
+                var x = new Date(item.datapoint[0]);
+                var y = item.datapoint[1].toFixed(2);
+                var xmonth = x.getMonth() + 1 +"";
+                if (xmonth.length == 1) {
+                    xmonth = "0" + xmonth;
+                }
+                showTooltip(item.pageX, item.pageY - 25,
+                            x.getDate() + '/' + xmonth + '/' + x.getFullYear() +
+                            " (" + x.getHours() + ":" + x.getMinutes() + ") = " + y);
+            }
+        }
+        else {
+            $("#tooltip").remove();
+            previousPoint = null;            
+        }
     });
 });
 </script>
