@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from price.models import Section, Goods, Trade
+from price.models import Section, Goods, Price, Trade
 from django.contrib import admin
 
 class TradeAdmin(admin.ModelAdmin):
@@ -20,4 +20,5 @@ class TradeAdmin(admin.ModelAdmin):
 
 admin.site.register(Section)
 admin.site.register(Goods)
+admin.site.register(Price)
 admin.site.register(Trade, TradeAdmin)

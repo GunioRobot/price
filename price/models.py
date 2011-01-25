@@ -45,6 +45,24 @@ CURR_CHOICES = (
     ('eur','eur'),
 )
 
+class Price(models.Model):
+    user = models.ForeignKey(User)
+    shop = models.ForeignKey(Shop)
+    goods = models.ForeignKey(Goods)
+    time_add = models.DateTimeField(default=datetime.now,editable=False) #auto
+    time_first = models.DateTimeField(default=datetime.now) #(auto_now_add=True)
+    time = models.DateTimeField(default=datetime.now) #(auto_now_add=True)
+    count_up = models.IntegerField()
+    price = models.DecimalField(max_digits=19, decimal_places=2)
+    currency = models.CharField(max_length=3,choices=CURR_CHOICES)
+
+    def __unicode__(self):
+        return "%s" % ( self.goods.__unicode__() + " " + unicode(self.price) )
+
+    class Meta:
+        ordering = ["-time"]
+
+
 class Trade(models.Model):
     user = models.ForeignKey(User)
     shop = models.ForeignKey(Shop)
