@@ -89,7 +89,7 @@ def trade_add(request):
 
             price1 = "%.2f" % ( float(form.cleaned_data['cost']) / float(form.cleaned_data['amount']) )
             try:
-                pricetmp = Price.objects.get(user=request.user, shop=shop1, price=Decimal(price1))
+                pricetmp = Price.objects.get(shop=shop1, goods=goods1, price=Decimal(price1))
                 pricetmp.count_up += 1
                 pricetmp.time = form.cleaned_data["time"]
                 pricetmp.save()
