@@ -71,6 +71,7 @@ class Trade(models.Model):
     time_add = models.DateTimeField(default=datetime.now,editable=False)
     amount = models.FloatField()
     price = models.DecimalField(max_digits=19, decimal_places=2)
+    priceid = models.ForeignKey(Price, null=True, blank=True)
     currency = models.CharField(max_length=3,choices=CURR_CHOICES)
     cost = models.DecimalField(max_digits=12, decimal_places=2)
     spytrade = models.BooleanField(default=False)
