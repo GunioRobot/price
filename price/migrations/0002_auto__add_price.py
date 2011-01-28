@@ -17,7 +17,7 @@ class Migration(SchemaMigration):
             ('time_add', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
             ('time_first', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
             ('time', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-            ('count_up', self.gf('django.db.models.fields.IntegerField')()),
+            ('count_up', self.gf('django.db.models.fields.IntegerField')(default=0)),
             ('price', self.gf('django.db.models.fields.DecimalField')(max_digits=19, decimal_places=2)),
             ('currency', self.gf('django.db.models.fields.CharField')(max_length=3)),
         ))

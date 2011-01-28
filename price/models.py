@@ -52,7 +52,7 @@ class Price(models.Model):
     time_add = models.DateTimeField(default=datetime.now,editable=False) #auto
     time_first = models.DateTimeField(default=datetime.now) #(auto_now_add=True)
     time = models.DateTimeField(default=datetime.now) #(auto_now_add=True)
-    count_up = models.IntegerField()
+    count_up = models.IntegerField(default=0)
     price = models.DecimalField(max_digits=19, decimal_places=2)
     currency = models.CharField(max_length=3,choices=CURR_CHOICES)
 

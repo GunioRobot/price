@@ -11,8 +11,9 @@ from django.db.models import Count, Sum, Q
 
 import simplejson
 import datetime, time
+from decimal import Decimal
 
-from price.models import Trade, TradeForm, Goods, Section
+from price.models import Trade, TradeForm, Goods, Section, Price
 from shop.models import Shop
 
 
@@ -87,6 +88,15 @@ def trade_add(request):
                 goods1.save()
 
             price1 = "%.2f" % ( float(form.cleaned_data['cost']) / float(form.cleaned_data['amount']) )
+            try:
+                pricetmp = Price.objects.get(user=request.user, shop=shop1, price=Decimal(price1))
+                pricetmp.count_up += 1
+                pricetmp.time = form.cleaned_data["time"]
+                pricetmp.save()
+            except Price.DoesNotExist:
+                pricetmp = Price(user=request.user, shop=shop1, goods=goods1, time_first=form.cleaned_data["time"],
+                    time=form.cleaned_data["time"], count_up=0, price=price1, currency=form.cleaned_data["currency"])
+                pricetmp.save()
 
             if isOldTrade:
                 trade1 = Trade.objects.get(pk=form.cleaned_data["trade_pk"])
@@ -99,6 +109,7 @@ def trade_add(request):
             trade1.time = form.cleaned_data["time"]
             trade1.amount = form.cleaned_data["amount"]
             trade1.price = price1
+            trade1.priceid = pricetmp
             trade1.cost = form.cleaned_data["cost"]
             trade1.currency = form.cleaned_data["currency"]
             trade1.spytrade = form.cleaned_data["spytrade"]
