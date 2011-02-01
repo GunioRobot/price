@@ -3,7 +3,7 @@
 <h1>Авторизация</h1>
 
 {% if user.is_authenticated %}
-Что такое, {{ user.username }}? Вы же уже авторизорваны.
+{{ user.username }}, вы же уже авторизорваны.
 Впрочем, всегда можно <a href="{% url auth_logout %}">выйти</a>.<br/><br/>
 {% else %}
 
@@ -11,7 +11,7 @@
 {{ form.non_field_errors }}
 {% endif %}
 
-<form method="post" action="">{% csrf_token %} 
+<form method="post" action="">{% csrf_token %}
 <dl class="register">
 {% for field in form %}
     <dt>{{ field.label_tag }}</dt>
