@@ -3,6 +3,9 @@
 
 # Django settings for app project.
 
+import os
+PROJECT_DIR = os.path.dirname(__file__)
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -16,8 +19,6 @@ DATABASE_USER = ''             # Not used with sqlite3.
 DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
-
-LOGIN_REDIRECT_URL = "/profile/"
 
 MANAGERS = ADMINS
 
@@ -115,6 +116,25 @@ INSTALLED_APPS = (
 #EMAIL_HOST_PASSWORD = ''
 #EMAIL_USE_TLS = False
 #DEFAULT_FROM_EMAIL = 'info@pricespeak.com'
+
+LOGIN_REDIRECT_URL = "/profile/"
+
+# SECRET_KEY
+if not hasattr(globals(), 'SECRET_KEY'):
+    SECRET_FILE = os.path.join(PROJECT_DIR, 'secret.txt')
+    try:
+        SECRET_KEY = open(SECRET_FILE).read().strip()
+    except IOError:
+        try:
+            from random import choice
+            import string
+            symbols = ''.join((string.lowercase, string.digits, string.punctuation ))
+            SECRET_KEY = ''.join([choice(symbols) for i in range(50)])
+            secret = file(SECRET_FILE, 'w')
+            secret.write(SECRET_KEY)
+            secret.close()
+        except IOError:
+            raise Exception('Please create a %s file with random characters to generate your secret key!' % SECRET_FILE)
 
 # DATABASE SETTINGS
 import socket
