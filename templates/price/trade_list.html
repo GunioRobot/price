@@ -59,7 +59,7 @@ $(document).ready(function() {
                                + val.label + '</input>');
     });
     choiceContainer.find("input").click(plotAccordingToChoices);
-    
+
     function plotAccordingToChoices() {
         var data = [];
 
@@ -85,7 +85,7 @@ $(document).ready(function() {
     }
 
     plotAccordingToChoices();
-    
+
     function showTooltip(x, y, contents) {
         $('<div id="tooltip">' + contents + '</div>').css( {
             position: 'absolute',
@@ -98,13 +98,13 @@ $(document).ready(function() {
             opacity: 0.80
         }).appendTo("body").fadeIn(200);
     };
-    
+
     var previousPoint = null;
     $("#price_chart").bind("plothover", function (event, pos, item) {
         if (item) {
             if (previousPoint != item.datapoint) {
                 previousPoint = item.datapoint;
-                
+
                 $("#tooltip").remove();
                 var x = new Date(item.datapoint[0]);
                 var y = item.datapoint[1].toFixed(2);
@@ -119,7 +119,7 @@ $(document).ready(function() {
         }
         else {
             $("#tooltip").remove();
-            previousPoint = null;            
+            previousPoint = null;
         }
     });
 });
@@ -171,7 +171,7 @@ $(document).ready(function() {
 <td><a href="/shop/{{ trade.shop.id }}" title="{{ trade.shop.addr.city }}, {{ trade.shop.addr.street }}, {{ trade.shop.title }}">маг</a></td>
 <td style="text-align:right">
 {% if is_profile or is_profile_month %}{% if trade.spytrade %}<img src="/media/eye.png"> {% endif %}{% endif %}
-{% if trade.user = user %}<a href="/trade/{{ trade.id }}">{{ trade.price }}</a> 
+{% if trade.user = user %}<a href="/trade/{{ trade.id }}">{{ trade.price }}</a>
 {% else %}{{ trade.price }}
 {% endif %}</td>
 <td>{{ trade.get_currency_display }}/{{ trade.goods.get_ed_display }}</td>

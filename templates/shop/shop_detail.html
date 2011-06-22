@@ -40,7 +40,7 @@ $(function () {
         grid: { hoverable: true, clickable: true },
         legend: { show: false },
     });
-    
+
     function showTooltip(x, y, contents) {
         $('<div id="tooltip">' + contents + '</div>').css( {
             position: 'absolute',
@@ -53,13 +53,13 @@ $(function () {
             opacity: 0.80
         }).appendTo("body").fadeIn(200);
     };
-    
+
     var previousPoint = null;
     $("#price_chart").bind("plothover", function (event, pos, item) {
         if (item) {
             if (previousPoint != item.datapoint) {
                 previousPoint = item.datapoint;
-                
+
                 $("#tooltip").remove();
                 var x = new Date(item.datapoint[0]);
                 var y = item.datapoint[1].toFixed(2);
@@ -74,7 +74,7 @@ $(function () {
         }
         else {
             $("#tooltip").remove();
-            previousPoint = null;            
+            previousPoint = null;
         }
     });
 });
