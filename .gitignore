@@ -4,6 +4,7 @@
 .directory
 password.py
 test.db
+secret.txt
 
 django
 south
